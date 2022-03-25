@@ -3,3 +3,8 @@ tqdm
 loguru
 translate
 faker
+
+pandas
+
+gdown
+imutils
