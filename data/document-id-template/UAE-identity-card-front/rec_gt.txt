@@ -1,0 +1,10 @@
+crop_img/main_crop_0.jpg	United Arab Emirates
+crop_img/main_crop_1.jpg	الإمارات العربية المتحدة
+crop_img/main_crop_2.jpg	Identity Card
+crop_img/main_crop_3.jpg	طاقه هوية
+crop_img/main_crop_4.jpg	ID Number /  رقم الهوية
+crop_img/main_crop_5.jpg	784-1234-1234567-1
+crop_img/main_crop_6.jpg	الاسم: حمد سالم ناص
+crop_img/main_crop_7.jpg	Name: Hammad Salem Naser
+crop_img/main_crop_8.jpg	الجنسية: الإمارات العربية المتحدة 
+crop_img/main_crop_9.jpg	Nationality: United Arab Emirates

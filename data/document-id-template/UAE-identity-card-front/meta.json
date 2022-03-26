@@ -1,0 +1,119 @@
+{
+    "project_name": "UAE-Resident id card - front",
+    "base_dir_path": "./data/document-id-template/UAE-identity-card-front",
+    "image_path": {
+        "original": "main.png",
+        "blank_image": "cleaned.png"
+    },
+    "boxes": [
+        {
+            "box_type": "text",
+            "box_info": "Country name in english",
+            "box_coordinates": [[13, 13], [181, 13], [181, 27], [13, 27]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text": "United Arab Emirates",
+            "is_multi_lang_subset": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-0--United Arab Emirates.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Country name in Arabic",
+            "box_coordinates": [[247, 8], [425, 8], [425, 31], [247, 31]],
+            "alignment": "right",
+            "render_text": true,
+            "lang": "ar",
+            "text": "دولة الإمارات العربية المتحدة",
+            "is_multi_lang_subset": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-1--country-name-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_coordinates": [[55, 44], [145, 44], [145, 58], [55, 58]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text": "Identity Card",
+            "is_multi_lang_subset": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-2--Identity-card.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Document type in Arabic",
+            "box_coordinates": [[296, 37], [380, 37], [380, 59], [296, 59]],
+            "alignment": "right",
+            "render_text": true,
+            "lang": "ar",
+            "text": "طاقه هوية",
+            "is_multi_lang_subset": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-3--Identity-card-word-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_coordinates": [[162, 87], [297, 87], [297, 105], [162, 105]],
+            "alignment": "right",
+            "render_text": true,
+            "lang": "mixed",
+            "is_multi_lang_subset": true,
+            "text": [
+                {
+                    "lang": "en",
+                    "text": "ID Number /",
+                    "font": {
+                        "name": "Roboto-Regular",
+                        "stroke_width": 0,
+                        "font_size": 36,
+                        "margin": 3,
+                        "case": "title"
+                    },
+                    "dict_file": "dicts/text-4--subset-0--Identity-number-string.txt"
+                },
+                {
+                    "lang": "ar",
+                    "text": "رقم الهوية",
+                    "font": {
+                        "name": "Times-New-Roman",
+                        "stroke_width": 1,
+                        "font_size": 36,
+                        "margin": 3,
+                        "case": "title"
+                    },
+                    "dict_file": "text-4--subset-1--Identity-number-string-in-arabic.txt"
+                }
+            ]
+        }
+    ]
+}
