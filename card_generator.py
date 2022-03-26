@@ -123,65 +123,121 @@ def main():
         alignment = box["alignment"]
         render_text = box["render_text"]
         language = box["lang"]
-
-        is_multi_lang_subset = box["text"]
-        font = box["font"]
-        dict_file = box["dict_file"]
-        dict_path = os.path.join(base_dir, dict_file)
-
-        ###
-        height = font["font_size"] # 26
-        margins = 3
-        dest_dir = os.path.join(output_root_dir, f"box_{box_index}")
-        os.makedirs(dest_dir, exist_ok=True)
+        is_multi_lang_parts = box["is_multi_lang_parts"]
+        margins = box.get("margins", 3)
         box_height, box_width = get_points_dims(points=box_coordinates)
 
-        font_name = font["name"]
-        stroke_width = font["stroke_width"]
+        ## Check is it contains multiple language parts
+        total_parts = 0
+        if alignment == "left":
+            last_rendered_image_topright_coordinates = box_coordinates[0] ##  Used if multiple parts
+        else:
+            ## From right side
+            last_rendered_image_topright_coordinates = box_coordinates[1] ##  Used if multiple parts
 
-        if not os.path.exists(dict_path):
-            print(f"Error... dict_path {dict_path} not exists on disk ...")
+        if language == "mix" or is_multi_lang_parts or "parts" in box:
+            total_parts = len(box["parts"])
+            is_multi_lang_parts = True
+        else:
+            total_parts = 1
+        
+        for part_index in range(0, total_parts):
+            if is_multi_lang_parts:
+                part = box["parts"][part_index]
+                # get single part attributes
+                language = part["lang"]
+                font = part["font"]
+                dict_file = part["dict_file"]
+                dict_path = os.path.join(base_dir, dict_file)
 
-        if language in ["en", "english"]:
-            font_parent = "latin"
-        elif language in ["ar", "arabic"]:
-            font_parent = "ar"
+                ###
+                height = font["font_size"] # 26
+                dest_dir = os.path.join(output_root_dir, "boxes",  f"box_{box_index}", f"part_{part_index}")
+                os.makedirs(dest_dir, exist_ok=True)
 
-        font_filepath = f"TextRecognitionDataGenerator/trdg/fonts/{font_parent}/{font_name}.ttf"
-        if not os.path.exists(font_filepath):
-            print(f"Error .. Font filepath: {font_filepath} not exists on disk ..")
+                font_name = font["name"]
+                stroke_width = font["stroke_width"]
+            else:
+                font = box["font"]
+                dict_file = box["dict_file"]
+                dict_path = os.path.join(base_dir, dict_file)
 
-        cmd = [
-            "--dict", dict_path, # "./data/document-id-template/UAE-identity-card-front/dicts/text-2--الإمارات العربية المتحدة.txt",
-            "--language", language, # "ar",
-            "--margins", str(margins),
-            "--format", str(height),
-            "--font", font_filepath, # "TextRecognitionDataGenerator/trdg/fonts/ar/Times-New-Roman.ttf",
-            "--output_dir", dest_dir,
-            "--stroke_width", str(stroke_width)
-        ]
+                ###
+                height = font["font_size"] # 26
+                dest_dir = os.path.join(output_root_dir, "boxes", f"box_{box_index}")
+                os.makedirs(dest_dir, exist_ok=True)
+                box_height, box_width = get_points_dims(points=box_coordinates)
 
-        ## final command
-        final_cmd = py_cmd + cmd + common_cmd_params
-        # print(" ".join(final_cmd))
+                font_name = font["name"]
+                stroke_width = font["stroke_width"]
 
-        result = subprocess.run(final_cmd, shell=True, capture_output=False, text=True, stderr=subprocess.STDOUT)
-        # print(result)
-        ## ----------------------------------------------------------------------
+            if not os.path.exists(dict_path):
+                print(f"Error... dict_path {dict_path} not exists on disk ...")
 
-        # # word_image_file = os.path.join(output_dir, f"United Arab Emirates_0.png")
-        # # word_image_file = os.path.join(output_dir, f"Identity Card_0.png")
-        # # word_image_file = os.path.join(output_dir, f"ﺓﺪﺤﺘﻤﻟﺍ ﺔﻴﺑﺮﻌﻟﺍ ﺕﺍﺭﺎﻣﻹﺍ ﺔﻟﻭﺩ_0.png")
-        word_image_file = os.path.join(dest_dir, f"0.png")
-        word_img = Image.open(word_image_file).convert("RGBA")
-        word_img = resize_pil_image(word_img, height=box_height)
+            if language in ["en", "english"]:
+                font_parent = "latin"
+            elif language in ["ar", "arabic"]:
+                font_parent = "ar"
 
-        # # new_position_x, new_position_y = 14, 10
-        # # new_position_x, new_position_y = 55, 42
-        new_position_x, new_position_y = box_coordinates[0] # 245, 7
-        document_bg_img.paste(word_img,(new_position_x, new_position_y), mask=word_img)
-        out_filepath = os.path.join(output_root_dir, f"result_rendered.png")
-        document_bg_img.save(out_filepath)
+            font_filepath = f"TextRecognitionDataGenerator/trdg/fonts/{font_parent}/{font_name}.ttf"
+            if not os.path.exists(font_filepath):
+                print(f"Error .. Font filepath: {font_filepath} not exists on disk ..")
+
+            cmd = [
+                "--dict", dict_path, # "./data/document-id-template/UAE-identity-card-front/dicts/text-2--الإمارات العربية المتحدة.txt",
+                "--language", language, # "ar",
+                "--margins", str(margins),
+                "--format", str(height),
+                "--font", font_filepath, # "TextRecognitionDataGenerator/trdg/fonts/ar/Times-New-Roman.ttf",
+                "--output_dir", dest_dir,
+                "--stroke_width", str(stroke_width)
+            ]
+
+            ## final command
+            final_cmd = py_cmd + cmd + common_cmd_params
+            print(" ".join(final_cmd))
+
+            result = subprocess.run(final_cmd, shell=True, capture_output=False, text=True, stderr=subprocess.STDOUT)
+            # print(result)
+            ## ----------------------------------------------------------------------
+
+            word_image_file = os.path.join(dest_dir, f"0.png")
+            word_img = Image.open(word_image_file).convert("RGBA")
+            word_img = resize_pil_image(word_img, height=box_height)
+            width_word_img = word_img.size[0]
+
+            if part_index >= 1:
+                if alignment == "left":
+                    new_position_x = last_rendered_image_topright_coordinates[0]
+                    new_position_y = box_coordinates[0][1]
+                else:
+                    new_position_x = last_rendered_image_topright_coordinates[0] - width_word_img
+                    new_position_y = box_coordinates[0][1]
+            else:
+                if alignment == "left":
+                    new_position_x, new_position_y = box_coordinates[0] # 245, 7
+                else:
+                    ## Width minus from right
+                    new_position_x, new_position_y = (
+                        box_coordinates[1][0] - width_word_img,
+                        box_coordinates[1][1]
+                    )
+
+            ## update last_rendered_image_topright_coordinates
+            if alignment == "left":
+                last_rendered_image_topright_coordinates = (
+                    (new_position_x + width_word_img), new_position_y
+                )
+            else:
+                ## If right to left rendering -- no need to add width
+                last_rendered_image_topright_coordinates = (
+                    new_position_x, new_position_y
+                )
+
+            ## Paste and save
+            document_bg_img.paste(word_img,(new_position_x, new_position_y), mask=word_img)
+            out_filepath = os.path.join(output_root_dir, f"result_rendered.png")
+            document_bg_img.save(out_filepath)
 
 if __name__ == "__main__":
     main()

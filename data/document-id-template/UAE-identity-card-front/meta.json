@@ -13,8 +13,8 @@
             "alignment": "left",
             "render_text": true,
             "lang": "en",
-            "text": "United Arab Emirates",
-            "is_multi_lang_subset": false,
+            "text_info": "United Arab Emirates",
+            "is_multi_lang_parts": false,
             "font": {
                 "name": "Roboto-Bold",
                 "bold": false,
@@ -29,11 +29,11 @@
             "box_type": "text",
             "box_info": "Country name in Arabic",
             "box_coordinates": [[247, 8], [425, 8], [425, 31], [247, 31]],
-            "alignment": "right",
+            "alignment": "left",
             "render_text": true,
             "lang": "ar",
-            "text": "دولة الإمارات العربية المتحدة",
-            "is_multi_lang_subset": false,
+            "text_info": "دولة الإمارات العربية المتحدة",
+            "is_multi_lang_parts": false,
             "font": {
                 "name": "Times-New-Roman",
                 "bold": false,
@@ -50,8 +50,8 @@
             "alignment": "left",
             "render_text": true,
             "lang": "en",
-            "text": "Identity Card",
-            "is_multi_lang_subset": false,
+            "text_info": "Identity Card",
+            "is_multi_lang_parts": false,
             "font": {
                 "name": "Roboto-Bold",
                 "bold": false,
@@ -66,11 +66,11 @@
             "box_type": "text",
             "box_info": "Document type in Arabic",
             "box_coordinates": [[296, 37], [380, 37], [380, 59], [296, 59]],
-            "alignment": "right",
+            "alignment": "left",
             "render_text": true,
             "lang": "ar",
-            "text": "طاقه هوية",
-            "is_multi_lang_subset": false,
+            "text_info": "طاقه هوية",
+            "is_multi_lang_parts": false,
             "font": {
                 "name": "Times-New-Roman",
                 "bold": false,
@@ -84,18 +84,18 @@
         {
             "box_type": "text",
             "box_coordinates": [[162, 87], [297, 87], [297, 105], [162, 105]],
-            "alignment": "right",
+            "alignment": "left",
             "render_text": true,
             "lang": "mixed",
-            "is_multi_lang_subset": true,
-            "text": [
+            "is_multi_lang_parts": true,
+            "parts": [
                 {
                     "lang": "en",
-                    "text": "ID Number /",
+                    "text_info": "ID Number /",
                     "font": {
-                        "name": "Roboto-Regular",
+                        "name": "RobotoCondensed-Regular",
                         "stroke_width": 0,
-                        "font_size": 36,
+                        "font_size": 20,
                         "margin": 3,
                         "case": "title"
                     },
@@ -103,7 +103,7 @@
                 },
                 {
                     "lang": "ar",
-                    "text": "رقم الهوية",
+                    "text_info": "رقم الهوية",
                     "font": {
                         "name": "Times-New-Roman",
                         "stroke_width": 1,
@@ -111,9 +111,103 @@
                         "margin": 3,
                         "case": "title"
                     },
-                    "dict_file": "text-4--subset-1--Identity-number-string-in-arabic.txt"
+                    "dict_file": "dicts/text-4--subset-1--Identity-number-string-in-arabic.txt"
                 }
             ]
+        },
+        {
+            "box_type": "text",
+            "box_coordinates": [[165, 107], [293, 107], [293, 118], [165, 118]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "Actual-id-number-sample: 784-1234-1234567-1",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": true,
+                "stroke_width": 0,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-5--actual-id-number.txt"
+        },
+
+        {
+            "box_type": "text",
+            "box_info": "Person name in Arabic",
+            "box_coordinates": [[38, 167], [305, 167], [305, 184], [38, 184]],
+            "alignment": "right",
+            "render_text": true,
+            "lang": "ar",
+            "text_info": "الاسم: حمد سالم ناص",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-6--person-name-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_coordinates": [[18, 202], [304, 202], [304, 214], [18, 214]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "Person name in english",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": true,
+                "stroke_width": 0,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-7--person-name-in-english.txt"
+        },
+
+        {
+            "box_type": "text",
+            "box_info": "Nationality in Arabic",
+            "box_coordinates": [[46, 231], [305, 231], [305, 247], [46, 247]],
+            "alignment": "right",
+            "render_text": true,
+            "lang": "ar",
+            "text_info": "الجنسية: الإمارات العربية المتحدة",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-8--nationality-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_coordinates": [[18, 251], [274, 251], [274, 263], [18, 263]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "Nationality in english",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": true,
+                "stroke_width": 0,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-9--nationality-english.txt"
         }
     ]
 }
