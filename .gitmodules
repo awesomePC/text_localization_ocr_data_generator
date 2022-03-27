@@ -1,3 +1,6 @@
 [submodule "TextRecognitionDataGenerator"]
 	path = TextRecognitionDataGenerator
 	url = https://github.com/Nivratti/TextRecognitionDataGenerator
+[submodule "python_arabic_reshaper"]
+	path = python_arabic_reshaper
+	url = https://github.com/Nivratti/python_arabic_reshaper.git
