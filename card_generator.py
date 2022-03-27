@@ -6,6 +6,8 @@ from PIL import Image
 # importing the module
 import json
 
+from visualization import draw_boxes
+
 parent_folder = os.path.dirname(os.path.abspath(__file__))
 submodule_path = os.path.join(parent_folder, "TextRecognitionDataGenerator")
 sys.path.append(submodule_path)
@@ -59,7 +61,7 @@ def resize_pil_image(img, width=None, height=None):
         dim = (width, int(h * r))
             
     # resize the image
-    return img.resize(dim, Image.ANTIALIAS)
+    return (img.resize(dim, Image.ANTIALIAS), r)
 
 def get_points_dims(points):
     """
@@ -111,10 +113,19 @@ def main():
     output_root_dir = os.path.join("out", project_name)
     os.makedirs(output_root_dir, exist_ok=True)
 
+    ## Result coordinates types -- 
+    ## 1: 4 points : [[], [], [], []]
+    ## 2. Rect : 4 numbers ex.
+    final_coordinate_types = "4-points"
+    
     ## For dev
     # box_index = 0
     # box = boxes[box_index]
     ## /end dev
+
+    ## List to store all annonations
+    line_annonations = [] 
+    word_annonations = [] 
 
     ## Render blocks
     for box_index, box in enumerate(boxes):
@@ -141,6 +152,9 @@ def main():
         else:
             total_parts = 1
         
+        all_parts_word_coordinates = []
+        all_parts_text = []
+        all_parts_words = []
         for part_index in range(0, total_parts):
             if is_multi_lang_parts:
                 part = box["parts"][part_index]
@@ -203,7 +217,8 @@ def main():
 
             word_image_file = os.path.join(dest_dir, f"0.png")
             word_img = Image.open(word_image_file).convert("RGBA")
-            word_img = resize_pil_image(word_img, height=box_height)
+            word_img, img_resizing_ratio = resize_pil_image(word_img, height=box_height)
+            print(f"Resizing ratio: ", img_resizing_ratio)
             width_word_img = word_img.size[0]
 
             if part_index >= 1:
@@ -223,7 +238,8 @@ def main():
                         box_coordinates[1][1]
                     )
 
-            ## update last_rendered_image_topright_coordinates
+            ## update last_rendered_image_topright_c
+            # coordinates
             if alignment == "left":
                 last_rendered_image_topright_coordinates = (
                     (new_position_x + width_word_img), new_position_y
@@ -238,6 +254,116 @@ def main():
             document_bg_img.paste(word_img,(new_position_x, new_position_y), mask=word_img)
             out_filepath = os.path.join(output_root_dir, f"result_rendered.png")
             document_bg_img.save(out_filepath)
+
+            all_word_coordinates = []
+            ## Bounding boxes
+            boxes_file = os.path.join(dest_dir, f"0_boxes.txt")
+            with open(boxes_file, encoding="utf-8") as fp:
+                Lines = fp.readlines()
+                for line in Lines[::2]:
+                    line = line.strip().replace('\n','')
+                    line_splitted = line.split(" ")
+                    x, y, x2, y2 = [int(float(i)) for i in line_splitted]
+                    coordinates = [x, y, x2, y2 ]
+
+                    ## As per image resizing change cordinate boxes
+                    coordinates = [round(value * img_resizing_ratio) for value in coordinates]
+
+                    ## Add current position of x, y as per image pasting -- to get actual box coordinate
+                    coordinates = [
+                        coordinates[0] + new_position_x, 
+                        coordinates[1] + new_position_y,
+                        coordinates[2] + new_position_x, 
+                        coordinates[3] + new_position_y,
+                    ]
+
+                    # print(f"coordinates: ", coordinates)
+                    all_word_coordinates.append(coordinates)
+
+            ## Label file
+            label_file = os.path.join(dest_dir, f"labels.txt")
+            with open(label_file, encoding="utf-8") as fp:
+                Lines = fp.readlines()
+                for line in Lines:
+                    line = line.strip().replace('\n','')
+                    splitted_line = line.split(" ", 1)
+                    file_name = splitted_line[0]
+                    text = splitted_line[1]
+                    words = text.split(" ")
+                    # print(f"Label text: ", text)
+                    # print(f"words: ", words)
+
+            all_parts_word_coordinates.extend(all_word_coordinates)
+            all_parts_words.extend(words)
+            all_parts_text.append(text) ## Append string value in list - -to join later
+        
+        # import ipdb; ipdb.set_trace()
+        # get final single line details
+        print(f"all_parts_word_coordinates: ", all_parts_word_coordinates)
+        line_coordinates = [
+            min([c[0] for c in all_parts_word_coordinates]),
+            min([c[1] for c in all_parts_word_coordinates]),
+            max([c[2] for c in all_parts_word_coordinates]),
+            max([c[3] for c in all_parts_word_coordinates])
+        ]
+        print(f"line_coordinates: ", line_coordinates)
+            # all_parts_word_coordinates[0][0], all_parts_word_coordinates[0][1],
+            # all_parts_word_coordinates[-1][2], all_parts_word_coordinates[-1][3]
+        line_text = " ".join(all_parts_text)
+
+        # if final_coordinate_types == "4-points":
+        #     ## Change rect coordinates to 4 points format
+        #     x1, y1, x2, y2 = line_coordinates
+        #     line_coordinates_4points = [
+        #         [x1, y1], [x2, y1],
+        #         [x1, y2 ], [x2, y2]
+        #     ]
+
+        #     ## Also for word coordinates
+        #     all_words_coordinates_4points = []
+        #     for word_coordinates in all_parts_word_coordinates:
+        #         x1, y1, x2, y2 = word_coordinates
+        #         all_words_coordinates_4points.append([
+        #             [x1, y1], [x2, y1],
+        #             [x1, y2 ], [x2, y2]
+        #         ]) 
+
+        ## Append all data to annonations
+        line_annonations.append({
+            "text": line_text,
+            "coordinates": line_coordinates
+        })
+
+        ## All Word coordinates in one list
+        for idx, word_coordinates in enumerate(all_parts_word_coordinates):
+            word_annonations.append({
+                "text": all_parts_words[idx],
+                "coordinates": word_coordinates
+            })
+        # import ipdb; ipdb.set_trace()
+
+    ## Write meta in json
+    final_meta = {
+        "line_annonations": line_annonations,
+        "word_annonations": word_annonations,
+    }
+    out_filepath = os.path.join(output_root_dir, "annonations.json")
+    with open(out_filepath, "w", encoding="utf-8") as outfile:
+        json.dump(final_meta, outfile, indent=4, ensure_ascii=False)
+    
+    ## Visualization
+    img_pil = document_bg_img.copy()
+    bounds = []
+    for line_annonation in line_annonations:
+        line_coordinates = line_annonation["coordinates"]
+        x1, y1, x2, y2 = line_coordinates
+        bounds.append([x1, x2, y1, y2])
+
+    # this function call the visualize method to draw the boxes around text
+    draw_boxes(img_pil, bounds=bounds, color='lime', width=1, text_font_size=14, text_fill_color="orange", draw_text_idx=True)
+    # display(img_pil)
+    img_pil.save(f"{output_root_dir}/line_annonations_visualized.png")
+
 
 if __name__ == "__main__":
     main()
