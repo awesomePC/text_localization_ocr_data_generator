@@ -96,8 +96,9 @@ def main():
         meta_data = json.load(json_file)
     
     # print(meta_data)
-    
-    total_images_2_generate = 10 # 2
+    # total_images_2_generate = 50 # 2
+    total_images_2_generate = int(input("Total images to generate: "))
+
     for synth_img_index in range(0, total_images_2_generate):
         print(f"=" * 80)
         print(f"synth_img_index: {synth_img_index}")

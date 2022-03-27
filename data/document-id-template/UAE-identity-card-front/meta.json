@@ -132,7 +132,7 @@
                 "case": "title"
             },
             "dict_file": "dicts/text-5--actual-id-number.txt",
-            "dict_file_multi": "dicts/uae_id.txt"
+            "dict_file_multi": "dicts/multiple-values/uae_id.txt"
         },
 
         {
@@ -153,7 +153,7 @@
                 "case": "title"
             },
             "dict_file": "dicts/text-6--person-name-in-arabic.txt",
-            "dict_file_multi": "dicts/arabic_person_names.txt",
+            "dict_file_multi": "dicts/multiple-values/arabic_person_names_50.txt",
             "append_word_2_multi_dict_value": ""
         },
         {
@@ -173,7 +173,7 @@
                 "case": "title"
             },
             "dict_file": "dicts/text-7--person-name-in-english.txt",
-            "dict_file_multi": "dicts/english_person_names.txt"
+            "dict_file_multi": "dicts/multiple-values/english_person_names_50.txt"
         },
 
         {
@@ -194,7 +194,7 @@
                 "case": "title"
             },
             "dict_file": "dicts/text-8--nationality-arabic.txt",
-            "dict_file_multi": "dicts/arabic_country_list.txt"
+            "dict_file_multi": "dicts/multiple-values/ar_county_names_with_prefix.txt"
         },
         {
             "box_type": "text",
@@ -213,7 +213,7 @@
                 "case": "title"
             },
             "dict_file": "dicts/text-9--nationality-english.txt",
-            "dict_file_multi": "dicts/english_country_list.txt"
+            "dict_file_multi": "dicts/multiple-values/english_county_names_with_prefix.txt"
         }
     ]
 }
