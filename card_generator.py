@@ -298,17 +298,15 @@ def main():
             all_parts_text.append(text) ## Append string value in list - -to join later
         
         # import ipdb; ipdb.set_trace()
+        # print(f"all_parts_word_coordinates: ", all_parts_word_coordinates)
         # get final single line details
-        print(f"all_parts_word_coordinates: ", all_parts_word_coordinates)
         line_coordinates = [
             min([c[0] for c in all_parts_word_coordinates]),
             min([c[1] for c in all_parts_word_coordinates]),
             max([c[2] for c in all_parts_word_coordinates]),
             max([c[3] for c in all_parts_word_coordinates])
         ]
-        print(f"line_coordinates: ", line_coordinates)
-            # all_parts_word_coordinates[0][0], all_parts_word_coordinates[0][1],
-            # all_parts_word_coordinates[-1][2], all_parts_word_coordinates[-1][3]
+        # print(f"line_coordinates: ", line_coordinates)
         line_text = " ".join(all_parts_text)
 
         # if final_coordinate_types == "4-points":
