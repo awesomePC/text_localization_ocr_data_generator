@@ -390,8 +390,8 @@ def main():
             ## All Word coordinates in one list
             for idx, word_coordinates in enumerate(all_parts_word_coordinates):
                 word_annonations.append({
-                    #  "text": all_parts_words[idx],
-                    "text": unreshape_arabic_text(all_parts_words[idx]),
+                     "text": all_parts_words[idx],
+                    # "text": unreshape_arabic_text(all_parts_words[idx]),
                     "coordinates": word_coordinates
                 })
             # import ipdb; ipdb.set_trace()
