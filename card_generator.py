@@ -269,12 +269,18 @@ def main():
                     ## As per image resizing change cordinate boxes
                     coordinates = [round(value * img_resizing_ratio) for value in coordinates]
 
+                    # ## Increase margin around by some factor
+                    # margin_scale_fcator = 0.08
+                    # margin_scale_value = round((coordinates[3] - coordinates[1]) * margin_scale_fcator) # margin scale value
+                    margin_scale_value = 1 ## Fixed by 2 px
+                    # import ipdb; ipdb.set_trace()
+
                     ## Add current position of x, y as per image pasting -- to get actual box coordinate
                     coordinates = [
-                        coordinates[0] + new_position_x, 
-                        coordinates[1] + new_position_y,
-                        coordinates[2] + new_position_x, 
-                        coordinates[3] + new_position_y,
+                        coordinates[0] + new_position_x - margin_scale_value, 
+                        coordinates[1] + new_position_y - margin_scale_value,
+                        coordinates[2] + new_position_x + margin_scale_value, 
+                        coordinates[3] + new_position_y + margin_scale_value,
                     ]
 
                     # print(f"coordinates: ", coordinates)
