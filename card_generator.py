@@ -8,6 +8,9 @@ import json
 
 from visualization import draw_boxes
 
+from python_arabic_reshaper import arabic_reshaper
+from bidi.algorithm import get_display
+
 parent_folder = os.path.dirname(os.path.abspath(__file__))
 submodule_path = os.path.join(parent_folder, "TextRecognitionDataGenerator")
 sys.path.append(submodule_path)
@@ -84,6 +87,24 @@ def get_points_dims(points):
     # print(f"height: ", height)
     # print(f"width: ", width)
     return (height, width)
+
+def unreshape_arabic_text(text_to_be_unreshape):
+    """
+    Unreshape text - convert text to original form
+
+    Args:
+        text_to_be_unreshape (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    un_reshaped_text = arabic_reshaper.unreshape(
+        text_to_be_unreshape
+    )
+    # print(un_reshaped_text)
+    # print(get_display(un_reshaped_text))
+    return get_display(un_reshaped_text)
+
 
 def main():
     """
@@ -361,14 +382,16 @@ def main():
 
             ## Append all data to annonations
             line_annonations.append({
-                "text": line_text,
+                "text": unreshape_arabic_text(line_text),
                 "coordinates": line_coordinates
             })
 
+            ## TODO: Colon in arabic showing at right side in single word instead of left -- in line it showing fine
             ## All Word coordinates in one list
             for idx, word_coordinates in enumerate(all_parts_word_coordinates):
                 word_annonations.append({
-                    "text": all_parts_words[idx],
+                    #  "text": all_parts_words[idx],
+                    "text": unreshape_arabic_text(all_parts_words[idx]),
                     "coordinates": word_coordinates
                 })
             # import ipdb; ipdb.set_trace()
