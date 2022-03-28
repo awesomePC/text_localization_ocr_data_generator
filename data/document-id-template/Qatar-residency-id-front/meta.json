@@ -1,0 +1,430 @@
+{
+    "project_name": "Qatar-Resident id card - front",
+    "base_dir_path": "./data/document-id-template/Qatar-residency-id-front",
+    "image_path": {
+        "original": "main.png",
+        "blank_image": "cleaned.png"
+    },
+    "boxes": [
+        {
+            "box_type": "text",
+            "box_info": "Country name in english",
+            "box_coordinates": [[60, 28], [503, 28], [503, 96], [60, 96]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "State Of Qatar",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-0--State-Of-Qatar.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Residency Permit",
+            "box_coordinates": [[29, 124], [537, 124], [537, 191], [29, 191]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "Residency Permit",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-1--Residency Permit.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "ID.No:",
+            "box_coordinates": [[25, 284], [175, 284], [175, 333], [25, 333]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "ID.No:",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-2--id-number-string.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "DOB",
+            "box_coordinates": [[23, 363], [201, 363], [201, 415], [23, 415]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "DOB",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-3--dob.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Expiry:",
+            "box_coordinates": [[23, 448], [202, 448], [202, 510], [23, 510]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "Expiry:",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-4--expiry.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Nationality string ",
+            "box_coordinates": [[20, 626], [308, 626], [308, 685], [20, 685]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "Nationality:",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-5--nationality.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Occupation Name string",
+            "box_coordinates": [[23, 713], [328, 713], [328, 773], [23, 773]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "Occupation:",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-6--occupation.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Person full name ",
+            "box_coordinates": [[18, 910], [1485, 910], [1485, 960], [18, 960]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "Name: FATMA SHAWKY HUSSEIN ABRAHIM",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-7--person-name.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "ID number details ",
+            "box_coordinates": [[380, 278], [759, 278], [759, 338], [380, 338]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "28481800069",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-8--id-number.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Date of birth details ",
+            "box_coordinates": [[385, 364], [701, 364], [701, 425], [385, 425]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "04/07/1981",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-9--dob-date.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Expiry details ",
+            "box_coordinates": [[387, 449], [703, 449], [703, 510], [387, 510]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "01/12/2021",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-10--expiry-date.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Person Country name in Arabic",
+            "box_coordinates": [[494, 534], [662, 534], [662, 606], [494, 606]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"مصرية",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-11--person-country-name-in-arabic.txt"
+        },
+        { 
+            "box_type": "text",
+            "box_info": "Person Country name in english ",
+            "box_coordinates": [[540, 630], [774, 630], [774, 678], [540, 678]],
+            "_comment": "Increased y1 value--top and right top manually to reduce height of rendered text",
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "EGYPT",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "RobotoCondensed-Regular",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-12--person-country-name-in-english.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Person Occupation name in Arabic",
+            "box_coordinates": [[599, 705], [713, 705], [713, 774], [599, 774]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"طالبه",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-13--person-occupation-name-arabic.txt",
+            "_Comment": "we have issue in generated occupation name by Azhar."
+        },
+        {
+            "box_type": "text",
+            "box_info": "Country name in Arabic",
+            "box_coordinates": [[1089, 12], [1503, 12], [1503, 115], [1089, 115]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"دولة قطر",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-14--country-name-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Residency Permit in Arabic",
+            "box_coordinates": [[1122, 115], [1481, 115], [1481, 198], [1122, 198]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"رخصة إقامة",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-15--Residency-permit-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "ID number in Arabic",
+            "box_coordinates": [[859, 273], [1133, 273], [1133, 342], [859, 342]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"الرقم الشخصي",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-16--id-number-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "DOB word in Arabic",
+            "box_coordinates": [[888, 359], [1135, 359], [1135, 426], [888, 426]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"تاريخ الميلاد:",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-17--dob-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Expiry word in Arabic",
+            "box_coordinates": [[938, 439], [1136, 439], [1136, 507], [938, 507]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"الصلاحية:",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-18--expiry-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Nationality word in Arabic",
+            "box_coordinates": [[952, 531], [1132, 531], [1132, 596], [952, 596]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"الجنسية:",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-19--nationality-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Occupation word  in Arabic",
+            "box_coordinates": [[992, 702], [1146, 702], [1146, 768], [992, 768]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"المهلة:",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-20---occupation-in-arabic.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "Person Name  in Arabic",
+            "box_coordinates": [[163, 782], [1534, 782], [1534, 863], [163, 863]],
+            "alignment": "right",
+            "render_text": true,
+            "lang": "ar",
+            "text_info":"الاسم: فاطمة شوقي حسين ابراهيم",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Times-New-Roman",
+                "bold": false,
+                "stroke_width": 1,
+                "font_size": 36,
+                "margin": 3,
+                "case": "title"
+            },
+            "dict_file": "dicts/text-21--person-name-in-arabic.txt"
+        }
+    ]
+}

@@ -112,13 +112,14 @@ def main():
     """
     ## ---------------------------------------------------------------------
     # Opening JSON file
-    json_meta_file = "./data/document-id-template/UAE-identity-card-front/meta.json"
-    with open(json_meta_file) as json_file:
+    # json_meta_file = "./data/document-id-template/UAE-identity-card-front/meta.json"
+    json_meta_file = "./data/document-id-template/Qatar-residency-id-front/meta.json"
+    with open(json_meta_file, encoding="utf-8") as json_file:
         meta_data = json.load(json_file)
     
     # print(meta_data)
-    # total_images_2_generate = 50 # 2
-    total_images_2_generate = int(input("Total images to generate: "))
+    total_images_2_generate = 1 # 50 # 2
+    # total_images_2_generate = int(input("Total images to generate: "))
 
     for synth_img_index in range(0, total_images_2_generate):
         print(f"=" * 80)
