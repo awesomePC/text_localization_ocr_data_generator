@@ -156,12 +156,13 @@
                 "margin": 3,
                 "case": "title"
             },
-            "dict_file": "dicts/text-7--person-name.txt"
+            "dict_file": "dicts/text-7--person-name.txt",
+            "dict_file_multi": "dicts/multiple-values/english_person_names_50.txt"
         },
         {
             "box_type": "text",
             "box_info": "ID number details ",
-            "box_coordinates": [[380, 278], [759, 278], [759, 338], [380, 338]],
+            "box_coordinates": [[380, 280], [759, 280], [759, 334], [380, 334]],
             "alignment": "left",
             "render_text": true,
             "lang": "en",
@@ -175,12 +176,13 @@
                 "margin": 3,
                 "case": "title"
             },
-            "dict_file": "dicts/text-8--id-number.txt"
+            "dict_file": "dicts/text-8--id-number.txt",
+            "dict_file_multi": "dicts/multiple-values/Qatar_card_number.txt"
         },
         {
             "box_type": "text",
             "box_info": "Date of birth details ",
-            "box_coordinates": [[385, 364], [701, 364], [701, 425], [385, 425]],
+            "box_coordinates": [[385, 368], [701, 368], [701, 420], [385, 420]],
             "alignment": "left",
             "render_text": true,
             "lang": "en",
@@ -199,7 +201,7 @@
         {
             "box_type": "text",
             "box_info": "Expiry details ",
-            "box_coordinates": [[387, 449], [703, 449], [703, 510], [387, 510]],
+            "box_coordinates": [[387, 449], [703, 449], [703, 500], [387, 500]],
             "alignment": "left",
             "render_text": true,
             "lang": "en",
@@ -218,8 +220,8 @@
         {
             "box_type": "text",
             "box_info": "Person Country name in Arabic",
-            "box_coordinates": [[494, 534], [662, 534], [662, 606], [494, 606]],
-            "alignment": "left",
+            "box_coordinates": [[494, 540], [662, 540], [662, 606], [494, 606]],
+            "alignment": "right",
             "render_text": true,
             "lang": "ar",
             "text_info":"مصرية",
@@ -232,7 +234,8 @@
                 "margin": 3,
                 "case": "title"
             },
-            "dict_file": "dicts/text-11--person-country-name-in-arabic.txt"
+            "dict_file": "dicts/text-11--person-country-name-in-arabic.txt",
+            "dict_file_multi": "dicts/multiple-values/arabic_country_list.txt"
         },
         { 
             "box_type": "text",
@@ -252,7 +255,8 @@
                 "margin": 3,
                 "case": "title"
             },
-            "dict_file": "dicts/text-12--person-country-name-in-english.txt"
+            "dict_file": "dicts/text-12--person-country-name-in-english.txt",
+            "dict_file_multi": "dicts/multiple-values/english_country_list.txt"
         },
         {
             "box_type": "text",
@@ -424,7 +428,8 @@
                 "margin": 3,
                 "case": "title"
             },
-            "dict_file": "dicts/text-21--person-name-in-arabic.txt"
+            "dict_file": "dicts/text-21--person-name-in-arabic.txt",
+            "dict_file_multi": "dicts/multiple-values/arabic_person_names_50.txt"
         }
     ]
 }
