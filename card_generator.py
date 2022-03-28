@@ -118,8 +118,8 @@ def main():
         meta_data = json.load(json_file)
     
     # print(meta_data)
-    total_images_2_generate = 1 # 50 # 2
-    # total_images_2_generate = int(input("Total images to generate: "))
+    # total_images_2_generate = 1 # 50 # 2
+    total_images_2_generate = int(input("Total images to generate: "))
 
     for synth_img_index in range(0, total_images_2_generate):
         print(f"=" * 80)
@@ -382,8 +382,22 @@ def main():
             #         ]) 
 
             ## Append all data to annonations
-            line_annonations.append({
+            """
+            TODO: Fix error in: unreshape_arabic_text(line_text)
+            Traceback (most recent call last):
+            File "card_generator.py", line 424, in <module>
+                main()
+            File "card_generator.py", line 386, in main
                 "text": unreshape_arabic_text(line_text),
+            File "card_generator.py", line 102, in unreshape_arabic_text
+                text_to_be_unreshape
+            File "E:\python\projects\text-localization-ocr-data-generator\python_arabic_reshaper\arabic_reshaper\arabic_reshaper.py", line 318, in unreshape
+                next_next_char = text_list[index+2]
+            IndexError: list index out of range
+            """
+            line_annonations.append({
+                "text": line_text,
+                # "text": unreshape_arabic_text(line_text),
                 "coordinates": line_coordinates
             })
 
