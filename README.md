@@ -7,14 +7,20 @@ Text localization OCR data generator is a tool for data geneartion, built for th
 ## Preparing and generating card dataset:
 
 1. Select card image to generate data ex. Quatar resident id.
-2. Make copy of that card and remove text from that card using [Snap Edit](https://snapedit.app/) or any other text inpaining tool. Download text removed image and Ensure original image and text removed image are of same size.
-3. Using PPOCRLabel tool draw cordinates around text to lcoate text, used to identify text location, text height and width for building meta etc. and Manually Write Metadata by refering sample from data folder for now, for this you can refer [video tutorials](https://drive.google.com/drive/u/0/folders/1d2SxJzMOtAVPnXUhYyVQYUcOxZjeWQqj)
+2. Make copy of that card and remove text from that card using [Snap Edit](https://snapedit.app/) or any other text in-paining tool. Download text removed image and Ensure original image and text removed image are of same size.
+3. Using PPOCRLabel tool draw coordinates around text to locate text, used to identify text location, text height and width for building meta etc. and Manually Write Metadata by referring sample from data folder for now, for this you can refer [video tutorials](https://drive.google.com/drive/u/0/folders/1d2SxJzMOtAVPnXUhYyVQYUcOxZjeWQqj)
 4. Generate cards using `python card_generator`
 
 ### TODO
 
 - [ ] Add new card layout generator tool
 - [x] Improve speed
+
+### Truncated(incomplete) text in rendered image:
+
+Note: After adding new font, generate more data and test generated result, sometimes text recognition data generator skips adding some text of word(ending text), it may be happen due to `string_generator.create_strings_from_dict` actual statement `current_string[:-1]` line no 57. 
+Example: In rendering arabic text with Naksh font, sometimes it skipped adding arabic character `ة` at end of rendered image, but it added in label file.
+
 
 ## How to add new Submodule repository in git 
 
