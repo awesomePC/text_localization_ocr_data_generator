@@ -7,11 +7,13 @@ Text localization OCR data generator
 
 2. When adding a Git submodule, your submodule will be staged. As a consequence, you will need to commit your submodule by using the “git commit” command.
 
-$ git commit -m "Added the submodule to the project."
-
-$ git push
-
+    ```
+    $ git commit -m "Added the submodule to the project."
+    $ git push
+    ```
 
 3. To pull a Git submodule, use the “git submodule update” command with the “–init” and the “–recursive” options.
-
-$ git submodule update --init --recursive
+    
+    ```console
+    $ git submodule update --init --recursive
+    ```
