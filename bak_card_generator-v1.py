@@ -106,130 +106,135 @@ def unreshape_arabic_text(text_to_be_unreshape):
     return get_display(un_reshaped_text)
 
 
-def generate_data_and_cards(
-    meta_data, total_images_2_generate=1,
-    is_generate_text=True, is_render_text_on_card=False,
-    image_index=0,
-    ):
+def main():
     """
-    1. Generate card data using text recognition data generator 
-    2. Render generated text on card
+        Description: Main function
     """
-    project_name = meta_data["project_name"]
-    base_dir_path = meta_data["base_dir_path"]
-    boxes = meta_data["boxes"]
+    ## ---------------------------------------------------------------------
+    # Opening JSON file
+    # json_meta_file = "./data/document-id-template/UAE-identity-card-front/meta.json"
+    json_meta_file = "./data/document-id-template/Qatar-residency-id-front/meta.json"
+    with open(json_meta_file, encoding="utf-8") as json_file:
+        meta_data = json.load(json_file)
+    
+    # print(meta_data)
+    # total_images_2_generate = 1 # 50 # 2
+    total_images_2_generate = int(input("Total images to generate: "))
 
-    ## Input dir -- metadata, main_img etc
-    base_dir = base_dir_path # "./data/document-id-template/UAE-identity-card-front"
+    for synth_img_index in range(0, total_images_2_generate):
+        print(f"=" * 80)
+        print(f"synth_img_index: {synth_img_index}")
+        project_name = meta_data["project_name"]
+        base_dir_path = meta_data["base_dir_path"]
+        image_path_original = meta_data["image_path"]["original"]
+        blank_image_path = meta_data["image_path"]["blank_image"]
+        boxes = meta_data["boxes"]
 
-    # ## ----------------------------------------------------------------------
-    generated_data_root_dir = os.path.join("out", project_name, f"synth_imgs_data")
-    os.makedirs(generated_data_root_dir, exist_ok=True)
+        ## --------------------------------------------------------------------
+        base_dir = base_dir_path # "./data/document-id-template/UAE-identity-card-front"
+        ## Pasting generated word image
+        doc_cleaned_img_file = os.path.join(base_dir, blank_image_path) # "cleaned.png")
+        document_bg_img = Image.open(doc_cleaned_img_file).convert("RGBA")
 
-    ## Main config for rendering card
-    ## List to store all annotations
-    line_annotations = [] 
-    word_annotations = [] 
+        # ## ----------------------------------------------------------------------
+        output_root_dir = os.path.join("out", project_name, f"synth_img_{synth_img_index:03}")
+        os.makedirs(output_root_dir, exist_ok=True)
 
-    image_path_original = meta_data["image_path"]["original"]
-    blank_image_path = meta_data["image_path"]["blank_image"]
-
-    ## Card image as a background
-    doc_cleaned_img_file = os.path.join(base_dir, blank_image_path) # "cleaned.png")
-    document_bg_img = Image.open(doc_cleaned_img_file).convert("RGBA")
-
-    out_dir_cards = os.path.join("out", project_name, f"synth_cards")
-    os.makedirs(out_dir_cards, exist_ok=True)
-    ## end--Main config for rendering card
-
-    ## Render blocks
-    for box_index, box in enumerate(boxes):
-        if box_index >= 2:
-            break ## for dev purpose only
-
-        box_type = box["box_type"]
-        render_text = box["render_text"]
-        box_coordinates = box["box_coordinates"]
-        alignment = box["alignment"]
+        ## Result coordinates types -- 
+        ## 1: 4 points : [[], [], [], []]
+        ## 2. Rect : 4 numbers ex.
+        final_coordinate_types = "4-points"
         
-        language = box["lang"]
-        is_multi_lang_parts = box["is_multi_lang_parts"]
-        margins = box.get("margins", 3)
+        ## For dev
+        # box_index = 0
+        # box = boxes[box_index]
+        ## /end dev
 
-        if language == "mix" or is_multi_lang_parts or "parts" in box:
-            total_parts = len(box["parts"])
-            is_multi_lang_parts = True
-        else:
-            total_parts = 1
+        ## List to store all annonations
+        line_annonations = [] 
+        word_annonations = [] 
 
-        if is_render_text_on_card:
-            all_parts_word_coordinates = []
-            all_parts_text = []
-            all_parts_words = []
+        ## Render blocks
+        for box_index, box in enumerate(boxes):
+            box_type = box["box_type"]
+            box_coordinates = box["box_coordinates"]
+            alignment = box["alignment"]
+            render_text = box["render_text"]
+            language = box["lang"]
+            is_multi_lang_parts = box["is_multi_lang_parts"]
+            margins = box.get("margins", 3)
+            box_height, box_width = get_points_dims(points=box_coordinates)
 
-            ## Alignment
+            ## Check is it contains multiple language parts
+            total_parts = 0
             if alignment == "left":
                 last_rendered_image_topright_coordinates = box_coordinates[0] ##  Used if multiple parts
             else:
                 ## From right side
                 last_rendered_image_topright_coordinates = box_coordinates[1] ##  Used if multiple parts
 
-        for part_index in range(0, total_parts):
-            if is_multi_lang_parts:
-                part = box["parts"][part_index]
-                # get single part attributes
-                language = part["lang"]
-                font = part["font"]
-                dict_file = part["dict_file"]
-                dict_path = os.path.join(base_dir, dict_file)
-
-                ###
-                height = font["font_size"] # 26
-                text_color = font.get("text_color", "#000000,#282828")
-                dest_dir = os.path.join(
-                    generated_data_root_dir, "boxes", 
-                    f"box_{box_index}", f"part_{part_index}"
-                )
-                os.makedirs(dest_dir, exist_ok=True)
-
-                font_name = font["name"]
-                stroke_width = font["stroke_width"]
+            if language == "mix" or is_multi_lang_parts or "parts" in box:
+                total_parts = len(box["parts"])
+                is_multi_lang_parts = True
             else:
-                font = box["font"]
-                dict_file = box["dict_file"]
-                dict_path = os.path.join(base_dir, dict_file)
-
-                ## select specific value from -- multiple values
-                dict_file_multiple_values = box.get("dict_file_multi", None)
-
-                ###
-                height = font["font_size"] # 26
-                text_color = font.get("text_color", "#000000,#808080") ## diffrent colors
-                # text_color = font.get("text_color", "#000000,#282828") ## only black
-
-                dest_dir = os.path.join(
-                    generated_data_root_dir, "boxes", f"box_{box_index}"
-                )
-                os.makedirs(dest_dir, exist_ok=True)
-                # box_height, box_width = get_points_dims(points=box_coordinates)
-
-                font_name = font["name"]
-                stroke_width = font["stroke_width"]
-
-            # print(f"dest_dir: ", dest_dir)
+                total_parts = 1
             
-            if is_generate_text:
+            all_parts_word_coordinates = []
+            all_parts_text = []
+            all_parts_words = []
+            for part_index in range(0, total_parts):
+                if is_multi_lang_parts:
+                    part = box["parts"][part_index]
+                    # get single part attributes
+                    language = part["lang"]
+                    font = part["font"]
+                    dict_file = part["dict_file"]
+                    dict_path = os.path.join(base_dir, dict_file)
+
+                    ###
+                    height = font["font_size"] # 26
+                    dest_dir = os.path.join(output_root_dir, "boxes",  f"box_{box_index}", f"part_{part_index}")
+                    os.makedirs(dest_dir, exist_ok=True)
+
+                    font_name = font["name"]
+                    stroke_width = font["stroke_width"]
+                else:
+                    font = box["font"]
+                    dict_file = box["dict_file"]
+                    dict_path = os.path.join(base_dir, dict_file)
+
+                    ## select specific value from -- multiple values
+                    dict_file_multiple_values = box.get("dict_file_multi", None)
+
+                    ###
+                    height = font["font_size"] # 26
+                    dest_dir = os.path.join(output_root_dir, "boxes", f"box_{box_index}")
+                    os.makedirs(dest_dir, exist_ok=True)
+                    box_height, box_width = get_points_dims(points=box_coordinates)
+
+                    font_name = font["name"]
+                    stroke_width = font["stroke_width"]
+
                 if not os.path.exists(dict_path):
                     print(f"Error... dict_path {dict_path} not exists on disk ...")
 
                 ### ----------------------------------
                 if dict_file_multiple_values:
                     ## multiple values
+                    single_selected_value = None
                     dict_file_multiple_values = box.get("dict_file_multi", None)
+                    all_dict_values = []
                     dict_file_multiple_values_path = os.path.join(base_dir, dict_file_multiple_values)
+                    with open(dict_file_multiple_values_path, encoding="utf-8") as fp:
+                        Lines = fp.readlines()
+                        for line in Lines:
+                            line = line.strip().replace('\n','')
+                            all_dict_values.append(line)
 
-                    ## new
-                    dict_path = dict_file_multiple_values_path
+                    single_selected_value = all_dict_values[synth_img_index]
+                    ## update new value in dict
+                    with open(dict_path, 'w', encoding="utf-8") as f:
+                        f.write(single_selected_value)
                 ## -------------------------------------
                     
                 if language in ["en", "english"]:
@@ -247,38 +252,22 @@ def generate_data_and_cards(
                     "--margins", str(margins),
                     "--format", str(height),
                     "--font", font_filepath, # "TextRecognitionDataGenerator/trdg/fonts/ar/Times-New-Roman.ttf",
-                    "--text_color", text_color,
-                    "--stroke_width", str(stroke_width),
                     "--output_dir", dest_dir,
-                    "--count", str(total_images_2_generate)
+                    "--stroke_width", str(stroke_width)
                 ]
 
                 ## final command
                 final_cmd = py_cmd + cmd + common_cmd_params
                 print(" ".join(final_cmd))
 
-                result = subprocess.run(
-                    final_cmd, shell=True, capture_output=False,
-                    text=True, stderr=subprocess.STDOUT
-                )
+                result = subprocess.run(final_cmd, shell=True, capture_output=False, text=True, stderr=subprocess.STDOUT)
                 # print(result)
                 ## ----------------------------------------------------------------------
 
-            if is_render_text_on_card:
-                box_height, box_width = get_points_dims(points=box_coordinates)
-
-                ## Check is it contains multiple language parts
-                total_parts = 0
-                if alignment == "left":
-                    last_rendered_image_topright_coordinates = box_coordinates[0] ##  Used if multiple parts
-                else:
-                    ## From right side
-                    last_rendered_image_topright_coordinates = box_coordinates[1] ##  Used if multiple parts
-
-                word_image_file = os.path.join(dest_dir, f"{image_index}.png")
+                word_image_file = os.path.join(dest_dir, f"0.png")
                 word_img = Image.open(word_image_file).convert("RGBA")
                 word_img, img_resizing_ratio = resize_pil_image(word_img, height=box_height)
-                # print(f"Resizing ratio: ", img_resizing_ratio)
+                print(f"Resizing ratio: ", img_resizing_ratio)
                 width_word_img = word_img.size[0]
 
                 if part_index >= 1:
@@ -312,14 +301,12 @@ def generate_data_and_cards(
 
                 ## Paste and save
                 document_bg_img.paste(word_img,(new_position_x, new_position_y), mask=word_img)
-                out_filepath = os.path.join(
-                    out_dir_cards, f"{image_index:03}.png"
-                )
-                document_bg_img.save(out_filepath) ## TODO: save at end
+                out_filepath = os.path.join(output_root_dir, f"result_rendered.png")
+                document_bg_img.save(out_filepath)
 
                 all_word_coordinates = []
                 ## Bounding boxes
-                boxes_file = os.path.join(dest_dir, f"{image_index}_boxes.txt")
+                boxes_file = os.path.join(dest_dir, f"0_boxes.txt")
                 with open(boxes_file, encoding="utf-8") as fp:
                     Lines = fp.readlines()
                     for line in Lines[::2]:
@@ -364,9 +351,8 @@ def generate_data_and_cards(
                 all_parts_word_coordinates.extend(all_word_coordinates)
                 all_parts_words.extend(words)
                 all_parts_text.append(text) ## Append string value in list - -to join later
-
-        if is_render_text_on_card:
-            ## Outside parts loop
+            
+            # import ipdb; ipdb.set_trace()
             # print(f"all_parts_word_coordinates: ", all_parts_word_coordinates)
             # get final single line details
             line_coordinates = [
@@ -378,87 +364,66 @@ def generate_data_and_cards(
             # print(f"line_coordinates: ", line_coordinates)
             line_text = " ".join(all_parts_text)
 
-            #     ## Append all data to annotations
-            #     """
-            #     TODO: Fix error in: unreshape_arabic_text(line_text)
-            #     Traceback (most recent call last):
-            #     File "card_generator.py", line 424, in <module>
-            #         main()
-            #     File "card_generator.py", line 386, in main
-            #         "text": unreshape_arabic_text(line_text),
-            #     File "card_generator.py", line 102, in unreshape_arabic_text
-            #         text_to_be_unreshape
-            #     File "E:\python\projects\text-localization-ocr-data-generator\python_arabic_reshaper\arabic_reshaper\arabic_reshaper.py", line 318, in unreshape
-            #         next_next_char = text_list[index+2]
-            #     IndexError: list index out of range
-            #     """
-            line_annotations.append({
+            # if final_coordinate_types == "4-points":
+            #     ## Change rect coordinates to 4 points format
+            #     x1, y1, x2, y2 = line_coordinates
+            #     line_coordinates_4points = [
+            #         [x1, y1], [x2, y1],
+            #         [x1, y2 ], [x2, y2]
+            #     ]
+
+            #     ## Also for word coordinates
+            #     all_words_coordinates_4points = []
+            #     for word_coordinates in all_parts_word_coordinates:
+            #         x1, y1, x2, y2 = word_coordinates
+            #         all_words_coordinates_4points.append([
+            #             [x1, y1], [x2, y1],
+            #             [x1, y2 ], [x2, y2]
+            #         ]) 
+
+            ## Append all data to annonations
+            """
+            TODO: Fix error in: unreshape_arabic_text(line_text)
+            Traceback (most recent call last):
+            File "card_generator.py", line 424, in <module>
+                main()
+            File "card_generator.py", line 386, in main
+                "text": unreshape_arabic_text(line_text),
+            File "card_generator.py", line 102, in unreshape_arabic_text
+                text_to_be_unreshape
+            File "E:\python\projects\text-localization-ocr-data-generator\python_arabic_reshaper\arabic_reshaper\arabic_reshaper.py", line 318, in unreshape
+                next_next_char = text_list[index+2]
+            IndexError: list index out of range
+            """
+            line_annonations.append({
                 "text": line_text,
                 # "text": unreshape_arabic_text(line_text),
                 "coordinates": line_coordinates
             })
+
+            ## TODO: Colon in arabic showing at right side in single word instead of left -- in line it showing fine
             ## All Word coordinates in one list
             for idx, word_coordinates in enumerate(all_parts_word_coordinates):
-                word_annotations.append({
-                    "text": all_parts_words[idx],
+                word_annonations.append({
+                     "text": all_parts_words[idx],
                     # "text": unreshape_arabic_text(all_parts_words[idx]),
                     "coordinates": word_coordinates
                 })
+            # import ipdb; ipdb.set_trace()
 
-    return (
-        line_annotations, word_annotations, out_dir_cards, document_bg_img
-    )
-
-def main():
-    """
-    Description: Main function
-    """
-    ## ---------------------------------------------------------------------
-    # Opening JSON file
-    # json_meta_file = "./data/document-id-template/UAE-identity-card-front/meta.json"
-    json_meta_file = "./data/document-id-template/Qatar-residency-id-front/meta.json"
-    with open(json_meta_file, encoding="utf-8") as json_file:
-        meta_data = json.load(json_file)
-    
-    # print(meta_data)
-    # total_images_2_generate = 1 # 50 # 2
-    total_images_2_generate = int(input("Total images to generate: "))
-
-    ## Generate data
-    generate_data_and_cards(
-        meta_data, total_images_2_generate=total_images_2_generate,
-    )
-
-    for image_index in range(0, total_images_2_generate):
-        ## Generate cards -- render data
-        result = generate_data_and_cards(
-            meta_data,
-            is_generate_text=False,
-            is_render_text_on_card=True,
-            image_index=image_index
-        )
-        line_annotations, word_annotations, out_dir_cards, document_bg_img = result
-    
         ## Write meta in json
         final_meta = {
-            "line_annotations": line_annotations,
-            "word_annotations": word_annotations,
+            "line_annonations": line_annonations,
+            "word_annonations": word_annonations,
         }
-        out_filepath = os.path.join(
-            out_dir_cards, f"{image_index:03}_annotations.json"
-        )
+        out_filepath = os.path.join(output_root_dir, "annonations.json")
         with open(out_filepath, "w", encoding="utf-8") as outfile:
             json.dump(final_meta, outfile, indent=4, ensure_ascii=False)
-    
+        
         ## Visualization
-        # base_dir = meta_data["base_dir_path"]
-        # blank_image_path = meta_data["image_path"]["blank_image"]
-        # ## Card image as a background
-        # doc_cleaned_img_file = os.path.join(base_dir, blank_image_path) # "cleaned.png")
-        # document_bg_img = Image.open(doc_cleaned_img_file).convert("RGBA")
         img_pil = document_bg_img.copy()
         bounds = []
-        for line_annonation in line_annotations:
+        for line_annonation in line_annonations:
             line_coordinates = line_annonation["coordinates"]
             x1, y1, x2, y2 = line_coordinates
             bounds.append([x1, x2, y1, y2])
@@ -466,23 +431,8 @@ def main():
         # this function call the visualize method to draw the boxes around text
         draw_boxes(img_pil, bounds=bounds, color='lime', width=1, text_font_size=14, text_fill_color="orange", draw_text_idx=True)
         # display(img_pil)
-        line_visualized_out_dir = os.path.join(
-            os.path.dirname(out_dir_cards), "visualized", "lines"
-        )
-        os.makedirs(line_visualized_out_dir, exist_ok=True)
-        img_pil.save(
-            os.path.join(
-                line_visualized_out_dir, f"{image_index:03}_visualized.png"
-            )
-        )
+        img_pil.save(f"{output_root_dir}/line_annonations_visualized.png")
+
 
 if __name__ == "__main__":
-    from timeit import default_timer as timer
-    from datetime import timedelta
-
-    start = timer()
-
     main()
-
-    end = timer()
-    print("Execution time: ", timedelta(seconds=end-start))
