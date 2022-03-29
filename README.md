@@ -11,6 +11,10 @@ Text localization OCR data generator is a tool for data geneartion, built for th
 3. Using PPOCRLabel tool draw cordinates around text to lcoate text, used to identify text location, text height and width for building meta etc. and Manually Write Metadata by refering sample from data folder for now, for this you can refer [video tutorials](https://drive.google.com/drive/u/0/folders/1d2SxJzMOtAVPnXUhYyVQYUcOxZjeWQqj)
 4. Generate cards using `python card_generator`
 
+### TODO
+
+- [ ] Add new card layout generator tool
+- [x] Improve speed
 
 ## How to add new Submodule repository in git 
 
