@@ -3,6 +3,8 @@ import subprocess
 import imutils
 from PIL import Image
 from tqdm.auto import tqdm
+from tqdm.contrib.concurrent import process_map, thread_map  # requires tqdm>=4.42.0
+from functools import partial
 
 # importing the module
 import json
@@ -108,9 +110,10 @@ def unreshape_arabic_text(text_to_be_unreshape):
 
 
 def generate_data_and_cards(
-    meta_data, total_images_2_generate=1,
+    image_index=0, meta_data={}, 
+    total_images_2_generate=1,
     is_generate_text=True, is_render_text_on_card=False,
-    image_index=0, thread_count=1,
+    thread_count=1,
     ):
     """
     1. Generate card data using text recognition data generator 
@@ -407,52 +410,16 @@ def generate_data_and_cards(
                     "coordinates": word_coordinates
                 })
 
+    ## Save final data -- after all boxes rendering
     if is_render_text_on_card:
+        ## --------------------------------------------------------
         ## Save final card image after rendering all
         out_card_filepath = os.path.join(
             out_dir_cards, f"{image_index:04}.png"
         )
         document_bg_img.save(out_card_filepath)
 
-        return (
-            line_annotations, word_annotations, out_dir_cards, document_bg_img
-        )
-
-def main():
-    """
-    Description: Main function
-    """
-    import psutil
-    cpu_workers = psutil.cpu_count(logical=False)
-
-    ## ---------------------------------------------------------------------
-    # Opening JSON file
-    # json_meta_file = "./data/document-id-template/UAE-identity-card-front/meta.json"
-    json_meta_file = "./data/document-id-template/Qatar-residency-id-front/meta.json"
-    with open(json_meta_file, encoding="utf-8") as json_file:
-        meta_data = json.load(json_file)
-    
-    # print(meta_data)
-    # total_images_2_generate = 1 # 50 # 2
-    total_images_2_generate = int(input("Total images to generate: "))
-
-    ## Step 1: Generate data
-    generate_data_and_cards(
-        meta_data, total_images_2_generate=total_images_2_generate,
-        thread_count=cpu_workers,
-    )
-
-    ## Step 2: Generate cards -- render data
-    print(f"\nProcessign step 2: Rendering cards")
-    for image_index in tqdm(range(0, total_images_2_generate)):
-        result = generate_data_and_cards(
-            meta_data,
-            is_generate_text=False,
-            is_render_text_on_card=True,
-            image_index=image_index
-        )
-        line_annotations, word_annotations, out_dir_cards, document_bg_img = result
-    
+        ## --------------------------------------------------------
         ## Write meta in json
         final_meta = {
             "line_annotations": line_annotations,
@@ -489,6 +456,54 @@ def main():
                 line_visualized_out_dir, f"{image_index:04}_visualized.png"
             )
         )
+    return True
+
+
+def main():
+    """
+    Description: Main function
+    """
+    import psutil
+    cpu_workers = psutil.cpu_count(logical=False)
+
+    ## ---------------------------------------------------------------------
+    # Opening JSON file
+    # json_meta_file = "./data/document-id-template/UAE-identity-card-front/meta.json"
+    json_meta_file = "./data/document-id-template/Qatar-residency-id-front/meta.json"
+    with open(json_meta_file, encoding="utf-8") as json_file:
+        meta_data = json.load(json_file)
+    
+    # print(meta_data)
+    # total_images_2_generate = 1 # 50 # 2
+    total_images_2_generate = int(input("Total images to generate: "))
+
+    ## Step 1: Generate data
+    generate_data_and_cards(
+        meta_data=meta_data, 
+        total_images_2_generate=total_images_2_generate,
+        thread_count=cpu_workers,
+    )
+
+    ## Step 2: Generate cards -- render data
+    print(f"\nProcessign step 2: Rendering cards")
+    # for image_index in tqdm(range(0, total_images_2_generate)):
+    #     generate_data_and_cards(
+    #         image_index=image_index,
+    #         meta_data=meta_data,
+    #         is_generate_text=False,
+    #         is_render_text_on_card=True,
+    #     )
+    worker = generate_data_and_cards  # function to map
+    kwargs = {
+        'meta_data': meta_data,
+        'is_generate_text': False,
+        'is_render_text_on_card': True
+    }
+    jobs = range(0, total_images_2_generate)  # file_rel_paths
+
+    result = process_map(partial(worker, **kwargs), jobs, max_workers=cpu_workers, chunksize=1)
+    return result
+
 
 if __name__ == "__main__":
     from timeit import default_timer as timer
