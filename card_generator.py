@@ -331,8 +331,10 @@ def generate_data_and_cards(
                     for line in Lines[::2]:
                         line = line.strip().replace('\n','')
                         line_splitted = line.split(" ")
-                        x, y, x2, y2 = [int(float(i)) for i in line_splitted]
-                        coordinates = [x, y, x2, y2 ]
+                        left_x, top_y, right_x, bottom_y = [
+                            int(float(i)) for i in line_splitted
+                        ]
+                        coordinates = [left_x, top_y, right_x, bottom_y]
 
                         ## As per image resizing change cordinate boxes
                         coordinates = [round(value * img_resizing_ratio) for value in coordinates]
