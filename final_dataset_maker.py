@@ -22,7 +22,7 @@ def main():
     out_dataset_folder = f"./out/final_dataset/{out_dataset_name}"
     os.makedirs(out_dataset_folder, exist_ok=True)
 
-    out_dataset_type = "PPOCRLabel" ## PPOCRLabel, icdar2015
+    out_dataset_type = "icdar2015" ## PPOCRLabel, icdar2015
 
     ##
     test_size = 0.10
