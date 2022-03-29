@@ -358,14 +358,16 @@ def generate_data_and_cards(
                 label_file = os.path.join(dest_dir, f"labels.txt")
                 with open(label_file, encoding="utf-8") as fp:
                     Lines = fp.readlines()
-                    for line in Lines:
-                        line = line.strip().replace('\n','')
-                        splitted_line = line.split(" ", 1)
-                        file_name = splitted_line[0]
-                        text = splitted_line[1]
-                        words = text.split(" ")
-                        # print(f"Label text: ", text)
-                        # print(f"words: ", words)
+                    for line_index, line in enumerate(Lines):
+                        if line_index == image_index: ## Read specific line label
+                            line = line.strip().replace('\n','')
+                            splitted_line = line.split(" ", 1)
+                            file_name = splitted_line[0]
+                            text = splitted_line[1]
+                            words = text.split(" ")
+                            # print(f"Label text: ", text)
+                            # print(f"words: ", words)
+                            break
 
                 all_parts_word_coordinates.extend(all_word_coordinates)
                 all_parts_words.extend(words)
@@ -403,6 +405,7 @@ def generate_data_and_cards(
                 # "text": unreshape_arabic_text(line_text),
                 "coordinates": line_coordinates
             })
+
             ## All Word coordinates in one list
             for idx, word_coordinates in enumerate(all_parts_word_coordinates):
                 word_annotations.append({
@@ -475,7 +478,7 @@ def main():
         meta_data = json.load(json_file)
     
     # print(meta_data)
-    # total_images_2_generate = 1 # 50 # 2
+    # total_images_2_generate = 1000 # 1 # 50 # 2
     total_images_2_generate = int(input("Total images to generate: "))
 
     ## Step 1: Generate data
@@ -484,6 +487,12 @@ def main():
         total_images_2_generate=total_images_2_generate,
         thread_count=cpu_workers,
     )
+
+    ###
+    ## TODO: AFter rendering word/line box images at once using text recognition data generator
+    ## We have used two diffrent dictionaries -- so in cards
+    ## English name and arabic name is not same in rendered card 
+    ## As textrecognition datagenerator picking random index value for diffrent dict
 
     ## Step 2: Generate cards -- render data
     print(f"\nProcessign step 2: Rendering cards")
@@ -494,6 +503,7 @@ def main():
     #         is_generate_text=False,
     #         is_render_text_on_card=True,
     #     )
+
     worker = generate_data_and_cards  # function to map
     kwargs = {
         'meta_data': meta_data,
