@@ -2,6 +2,7 @@ import os,sys
 import subprocess
 import imutils
 from PIL import Image
+from tqdm.auto import tqdm
 
 # importing the module
 import json
@@ -109,7 +110,7 @@ def unreshape_arabic_text(text_to_be_unreshape):
 def generate_data_and_cards(
     meta_data, total_images_2_generate=1,
     is_generate_text=True, is_render_text_on_card=False,
-    image_index=0,
+    image_index=0, thread_count=1,
     ):
     """
     1. Generate card data using text recognition data generator 
@@ -204,8 +205,8 @@ def generate_data_and_cards(
 
                 ###
                 height = font["font_size"] # 26
-                text_color = font.get("text_color", "#000000,#808080") ## diffrent colors
-                # text_color = font.get("text_color", "#000000,#282828") ## only black
+                # text_color = font.get("text_color", "#000000,#808080") ## diffrent colors
+                text_color = font.get("text_color", "#000000,#282828") ## only black
 
                 dest_dir = os.path.join(
                     generated_data_root_dir, "boxes", f"box_{box_index}"
@@ -250,7 +251,8 @@ def generate_data_and_cards(
                     "--text_color", text_color,
                     "--stroke_width", str(stroke_width),
                     "--output_dir", dest_dir,
-                    "--count", str(total_images_2_generate)
+                    "--count", str(total_images_2_generate),
+                    "--thread_count", str(thread_count)
                 ]
 
                 ## final command
@@ -312,10 +314,10 @@ def generate_data_and_cards(
 
                 ## Paste and save
                 document_bg_img.paste(word_img,(new_position_x, new_position_y), mask=word_img)
-                out_filepath = os.path.join(
-                    out_dir_cards, f"{image_index:03}.png"
-                )
-                document_bg_img.save(out_filepath) ## TODO: save at end
+                # out_card_filepath = os.path.join(
+                #     out_dir_cards, f"{image_index:04}.png"
+                # )
+                # document_bg_img.save(out_card_filepath) ## TODO: save at end
 
                 all_word_coordinates = []
                 ## Bounding boxes
@@ -405,14 +407,24 @@ def generate_data_and_cards(
                     "coordinates": word_coordinates
                 })
 
-    return (
-        line_annotations, word_annotations, out_dir_cards, document_bg_img
-    )
+    if is_render_text_on_card:
+        ## Save final card image after rendering all
+        out_card_filepath = os.path.join(
+            out_dir_cards, f"{image_index:04}.png"
+        )
+        document_bg_img.save(out_card_filepath)
+
+        return (
+            line_annotations, word_annotations, out_dir_cards, document_bg_img
+        )
 
 def main():
     """
     Description: Main function
     """
+    import psutil
+    cpu_workers = psutil.cpu_count(logical=False)
+
     ## ---------------------------------------------------------------------
     # Opening JSON file
     # json_meta_file = "./data/document-id-template/UAE-identity-card-front/meta.json"
@@ -424,13 +436,15 @@ def main():
     # total_images_2_generate = 1 # 50 # 2
     total_images_2_generate = int(input("Total images to generate: "))
 
-    ## Generate data
+    ## Step 1: Generate data
     generate_data_and_cards(
         meta_data, total_images_2_generate=total_images_2_generate,
+        thread_count=cpu_workers,
     )
 
-    for image_index in range(0, total_images_2_generate):
-        ## Generate cards -- render data
+    ## Step 2: Generate cards -- render data
+    print(f"\nProcessign step 2: Rendering cards")
+    for image_index in tqdm(range(0, total_images_2_generate)):
         result = generate_data_and_cards(
             meta_data,
             is_generate_text=False,
@@ -445,7 +459,7 @@ def main():
             "word_annotations": word_annotations,
         }
         out_filepath = os.path.join(
-            out_dir_cards, f"{image_index:03}_annotations.json"
+            out_dir_cards, f"{image_index:04}_annotations.json"
         )
         with open(out_filepath, "w", encoding="utf-8") as outfile:
             json.dump(final_meta, outfile, indent=4, ensure_ascii=False)
@@ -472,7 +486,7 @@ def main():
         os.makedirs(line_visualized_out_dir, exist_ok=True)
         img_pil.save(
             os.path.join(
-                line_visualized_out_dir, f"{image_index:03}_visualized.png"
+                line_visualized_out_dir, f"{image_index:04}_visualized.png"
             )
         )
 
