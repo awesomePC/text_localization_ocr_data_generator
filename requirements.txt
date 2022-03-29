@@ -10,3 +10,4 @@ gdown
 imutils
 
 psutil
+sklearn
