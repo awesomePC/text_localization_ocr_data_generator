@@ -3,6 +3,7 @@ import json
 import shutil
 from pathlib import Path
 from nb_utils.file_dir_handling import list_files
+import csv
 import pandas as pd
 
 def main():
@@ -26,9 +27,17 @@ def main():
         lst_final_annonations = []
         for idx, line_annonation in enumerate(raw_line_annonations):
             final_annonations = {}
-            final_annonations["transcription"] = line_annonation["text"]
-            final_annonations["points"] = line_annonation["coordinates"]
-            final_annonations["difficult"] = False
+            final_annonations['transcription'] = line_annonation["text"]
+
+            left_x, top_y, right_x, bottom_y = line_annonation["coordinates"]
+            line_coordinates_4points = [
+                [left_x, top_y],
+                [right_x, top_y]
+                [right_x, bottom_y],
+                [left_x, bottom_y]
+            ]
+            final_annonations['points'] = line_coordinates_4points
+            final_annonations['difficult'] = False
             lst_final_annonations.append(final_annonations)
 
         ## image
@@ -45,16 +54,16 @@ def main():
         # shutil.copy2(raw_annonation_file, out_raw_annonation_file) ## Copy raw json -- optional
 
         lst_all_files_final_annonations.append({
-            "filename": os.path.join(out_dataset_name, out_img_name),
+            "filename": f"{out_dataset_name}/{out_img_name}",
             "annonation": lst_final_annonations
         })
 
-    # import ipdb; ipdb.set_trace()
+    # # import ipdb; ipdb.set_trace()
     ## Write final annonations
     df = pd.DataFrame(lst_all_files_final_annonations)
     print(f"df.info(): ", df.info())
     out_final_csv_path = os.path.join(out_folder, "Label.txt")
-    df.to_csv(out_final_csv_path, sep="\t", index=False, header=None)
+    df.to_csv(out_final_csv_path, sep="\t", index=False, header=None, quoting=csv.QUOTE_NONE)
     ## write copy in root folder
     df.to_csv(
         os.path.join(os.path.dirname(out_folder), "Label.txt"),
