@@ -148,8 +148,9 @@ def generate_data_and_cards(
 
     ## Render blocks
     for box_index, box in enumerate(boxes):
-        if box_index >= 2:
-            break ## for dev purpose only
+        ## if development_mode:
+        # if box_index >= 2:
+        #     break ## for dev purpose only
 
         box_type = box["box_type"]
         render_text = box["render_text"]
