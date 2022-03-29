@@ -31,6 +31,7 @@ common_cmd_params = [
     "--background", "4",
     "--word_split",
     "--fit",
+    "--preserve_indexing",
 ]
 
 def resize_pil_image(img, width=None, height=None):

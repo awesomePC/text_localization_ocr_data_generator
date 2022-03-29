@@ -160,7 +160,6 @@ Nationality: New Zealand
 Nationality: Nicaragua
 Nationality: Niger
 Nationality: Nigeria
-Nationality: Niue
 Nationality: Norfolk Island
 Nationality: Northern Mariana Islands
 Nationality: Norway
@@ -221,7 +220,6 @@ Nationality: Tanzania, United Republic of
 Nationality: Thailand
 Nationality: Timor-Leste
 Nationality: Togo
-Nationality: Tokelau
 Nationality: Tonga
 Nationality: Trinidad and Tobago
 Nationality: Tunisia
