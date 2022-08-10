@@ -7,7 +7,7 @@ Text localization OCR data generator is a tool for data geneartion, built for th
 ## Preparing and generating card dataset:
 
 1. Select card image to generate data ex. Quatar resident id.
-2. Make copy of that card and remove text from that card using [Snap Edit](https://snapedit.app/) or any other text in-paining tool. Download text removed image and Ensure original image and text removed image are of same size.
+2. Make copy of that card and remove text from that card using [Cleanup.pictures](https://cleanup.pictures/), [Snap Edit](https://snapedit.app/) or any other text in-paining tool. Download text removed image and Ensure original image and text removed image are of same size.
 3. Using PPOCRLabel tool draw coordinates around text to locate text, used to identify text location, text height and width for building meta etc. and Manually Write Metadata by referring sample from data folder for now, for this you can refer [video tutorials](https://drive.google.com/drive/u/0/folders/1d2SxJzMOtAVPnXUhYyVQYUcOxZjeWQqj)
 4. Generate cards using `python card_generator`
 
