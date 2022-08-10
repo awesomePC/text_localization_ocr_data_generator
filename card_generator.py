@@ -236,6 +236,10 @@ def generate_data_and_cards(
 
                     ## new
                     dict_path = dict_file_multiple_values_path
+
+                if not os.path.exists(dict_path):
+                    sys.exit("Error.. Dict path {dict_path} not exists..")
+                    
                 ## -------------------------------------
                     
                 if language in ["en", "english"]:
@@ -247,22 +251,25 @@ def generate_data_and_cards(
                 if not os.path.exists(font_filepath):
                     print(f"Error .. Font filepath: {font_filepath} not exists on disk ..")
 
+                ## Update 10 AUg 2022
+                ## Added quote to params to avoid shell command failure -- if space in str values
+                ## As well as passing proper value to textrecognition data generator
                 cmd = [
                     "--dict", f'"{dict_path}"', # "./data/document-id-template/UAE-identity-card-front/dicts/text-2--الإمارات العربية المتحدة.txt",
-                    "--language", language, # "ar",
-                    "--margins", str(margins),
-                    "--format", str(height),
+                    "--language", f'"{language}"', # "ar",
+                    "--margins", f'"{margins}"',
+                    "--format", f'"{height}"',
                     "--font", f'"{font_filepath}"', # "TextRecognitionDataGenerator/trdg/fonts/ar/Times-New-Roman.ttf",
-                    # "--text_color", str(text_color),
-                    "--stroke_width", str(stroke_width),
+                    "--text_color", f'"{text_color}"',
+                    "--stroke_width", f'"{stroke_width}"',
                     "--output_dir", f'"{dest_dir}"',
-                    "--count", str(total_images_2_generate),
-                    "--thread_count", str(thread_count)
+                    "--count", f'"{total_images_2_generate}"',
+                    "--thread_count", f'"{thread_count}"'
                 ]
 
                 ## final command
                 final_cmd = py_cmd + cmd + common_cmd_params
-                # print(" ".join(final_cmd))
+                print(" ".join(final_cmd))
 
                 # result = subprocess.run(
                 #     final_cmd, shell=True, capture_output=False,
