@@ -13,16 +13,39 @@ from sklearn.model_selection import train_test_split
 
 
 def main():
-    dir_base_input_folder = "out/Qatar-Resident id card - front/synth_cards/"
+    import argparse
+
+    # create the argument parser
+    parser = argparse.ArgumentParser()
+    # add an argument
+    parser.add_argument(
+        "-i", "--base_input_folder", type=str, required=True,
+        help="Base input folder to read generated cards data ex. `out/Qatar-Resident id card - front/synth_cards/`"
+    )
+    parser.add_argument(
+        "-o", "--output_folder", type=str, required=True,
+        help="Base output folder to save final dataset ex. `./out/final_dataset/Qatar-resident-id-card-front-10-icdar2015-format`"
+    )
+    parser.add_argument(
+        "-d", "--out_dataset_type", type=str, required=False,
+        default="icdar2015",
+        help="Dataset type either PPOCRLabel, icdar2015. Default: icdar2015"
+    )
+    # parse the arguments
+    args = parser.parse_args()
+
+    # dir_base_input_folder = "out/Qatar-Resident id card - front/synth_cards/"
 
     # out_dataset_name = "Qatar-resident-id-card-front-1000-PPOCRlabel-format"
     # out_dataset_name = "Qatar-resident-id-card-front-1000-icdar2015-format"
-    out_dataset_name = "Qatar-resident-id-card-front-10-icdar2015-format"
+    # out_dataset_name = "Qatar-resident-id-card-front-10-icdar2015-format"
+    dir_base_input_folder = args.base_input_folder
+    out_dataset_folder = args.output_folder
 
-    out_dataset_folder = f"./out/final_dataset/{out_dataset_name}"
+    out_dataset_name = os.path.basename(out_dataset_folder)
     os.makedirs(out_dataset_folder, exist_ok=True)
 
-    out_dataset_type = "icdar2015" ## PPOCRLabel, icdar2015
+    out_dataset_type = args.out_dataset_type # "icdar2015" ## PPOCRLabel, icdar2015
 
     ##
     test_size = 0.10
@@ -33,6 +56,7 @@ def main():
 
         out_annonation_folder = os.path.join(out_dataset_folder, "annotations")
         os.makedirs(out_annonation_folder, exist_ok=True)
+        # import ipdb;ipdb.set_trace()
 
     ### List annonation files
     raw_annonation_files = list_files(dir_base_input_folder, filter_ext=[".json"])
