@@ -19,7 +19,7 @@ submodule_path = os.path.join(parent_folder, "TextRecognitionDataGenerator")
 sys.path.append(submodule_path)
 
 py_cmd = [
-    "/home/nivratti/anaconda3/envs/text-localization-ocr-data-generator/bin/python",
+    "python",
     "TextRecognitionDataGenerator/trdg/run.py",
 ]
 
@@ -239,7 +239,7 @@ def generate_data_and_cards(
 
                 if not os.path.exists(dict_path):
                     sys.exit("Error.. Dict path {dict_path} not exists..")
-                    
+
                 ## -------------------------------------
                     
                 if language in ["en", "english"]:
