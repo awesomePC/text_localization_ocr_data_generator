@@ -6,8 +6,8 @@ Text localization OCR data generator is a tool for data generation, built for th
 
 ## Cone repo
 
-    ```bash
-    git clone --recurse-submodules https://github.com/Nivratti/text-localization-ocr-data-generator.git
+    ```console
+    $ git clone --recurse-submodules https://github.com/Nivratti/text-localization-ocr-data-generator.git
     ```
     
 ## Preparing and generating card dataset:
