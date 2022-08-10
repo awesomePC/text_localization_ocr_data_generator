@@ -1,0 +1,29 @@
+{
+    "project_name": "digital-multimeter-1",
+    "base_dir_path": "./data/digital-multimeter-1",
+    "image_path": {
+        "original": "main.png",
+        "blank_image": "cleaned.png"
+    },
+    "boxes": [
+        {
+            "box_type": "text",
+            "box_info": "box for 3-or-4-digit-number",
+            "box_coordinates": [[525, 147], [877, 147], [877, 250], [525, 250]],
+            "alignment": "right",
+            "render_text": true,
+            "lang": "ar",
+            "text_info": "3-or-4-digit-number",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 36,
+                "margin": 5,
+                "case": "title"
+            },
+            "dict_file": "dicts/digital-multimeter-numbers--3-to-4--cnt-500.txt"
+        }
+    ]
+}

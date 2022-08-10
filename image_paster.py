@@ -63,16 +63,16 @@ def paste_text_imgs_on_bg(
             margin_right = int(margin_right * bg_width / 100)
 
         ## image placing position which can change every time 
-        ## Current postion of cursor -- update it after pasting image
+        ## Current position of cursor -- update it after pasting image
         current_x = 0
         current_y = 0
 
         ## Line element max_height 
         line_item_height = 0
         is_first_item_on_line = True # Is it first item on line
-        for child_imagefile in lst_text_images_2_paste:
-            c = Path(child_imagefile)
-            child_image = Image.open(child_imagefile)
+        for child_image_file in lst_text_images_2_paste:
+            c = Path(child_image_file)
+            child_image = Image.open(child_image_file)
             child_img_width, child_img_height = child_image.size
 
             ## Compute position to paste image
@@ -146,7 +146,7 @@ def main():
 
     parser.add_argument(
       "-td", "--dir_text_imgs", type=str, required=False, 
-      default="./data/word-images-genearted-by-text-recognition-data-generator",
+      default="./data/word-images-generated-by-text-recognition-data-generator",
       help = """Source directory to read text images for pasting it in background images. 
       Source text images is generated using 
       1) text recognition data generator script 
@@ -162,7 +162,7 @@ def main():
     )
     parser.add_argument(
       "-rd", "--dir_result", type=str, required=False,
-      default="./data/output_result",
+      default="./out/output_result",
       help = "directory to store final images"
     )
     parser.add_argument(

@@ -1,5 +1,5 @@
 import os,sys
-import subprocess, shlex
+import subprocess
 import imutils
 from PIL import Image
 from tqdm.auto import tqdm
@@ -19,7 +19,7 @@ submodule_path = os.path.join(parent_folder, "TextRecognitionDataGenerator")
 sys.path.append(submodule_path)
 
 py_cmd = [
-    "/home/nivratti/anaconda3/envs/text-localization-ocr-data-generator/bin/python",
+    "python",
     "TextRecognitionDataGenerator/trdg/run.py",
 ]
 
@@ -211,7 +211,7 @@ def generate_data_and_cards(
                 ###
                 height = font["font_size"] # 26
                 # text_color = font.get("text_color", "#000000,#808080") ## diffrent colors
-                text_color = font.get("text_color", "#000000") ## only black
+                text_color = font.get("text_color", "#000000,#282828") ## only black
 
                 dest_dir = os.path.join(
                     generated_data_root_dir, "boxes", f"box_{box_index}"
@@ -248,38 +248,28 @@ def generate_data_and_cards(
                     print(f"Error .. Font filepath: {font_filepath} not exists on disk ..")
 
                 cmd = [
-                    "--dict", f'"{dict_path}"', # "./data/document-id-template/UAE-identity-card-front/dicts/text-2--الإمارات العربية المتحدة.txt",
+                    "--dict", dict_path, # "./data/document-id-template/UAE-identity-card-front/dicts/text-2--الإمارات العربية المتحدة.txt",
                     "--language", language, # "ar",
                     "--margins", str(margins),
                     "--format", str(height),
-                    "--font", f'"{font_filepath}"', # "TextRecognitionDataGenerator/trdg/fonts/ar/Times-New-Roman.ttf",
-                    # "--text_color", str(text_color),
+                    "--font", font_filepath, # "TextRecognitionDataGenerator/trdg/fonts/ar/Times-New-Roman.ttf",
+                    "--text_color", text_color,
                     "--stroke_width", str(stroke_width),
-                    "--output_dir", f'"{dest_dir}"',
+                    "--output_dir", dest_dir,
                     "--count", str(total_images_2_generate),
                     "--thread_count", str(thread_count)
                 ]
 
                 ## final command
                 final_cmd = py_cmd + cmd + common_cmd_params
-                # print(" ".join(final_cmd))
+                print(" ".join(final_cmd))
 
-                # result = subprocess.run(
-                #     final_cmd, shell=True, capture_output=False,
-                #     text=True, stderr=subprocess.STDOUT
-                # )
-
-                # command = "python3 TextRecognitionDataGenerator/trdg/run.py --dict ./data/digital-multimeter-1/dicts/digital-multimeter-numbers--3-to-4--cnt-500.txt --language en --margins 3 --format 36 --font /media/nivratti/programming4/python/projects/custom_ocr_pipeline_uwk_project/fonts/7-segment/Seven-Segment.ttf --text_color '#000000' --stroke_width 0 --output_dir out/digital-multimeter-1/synth_imgs_data/boxes/box_0 --count 100 --thread_count 4 --name_format 2 --extension png --image_mode RGBA --output_bboxes 1 --background 4 --word_split --fit --preserve_indexing"
-                # call_params = shlex.split(command)
-                # # result = subprocess.run(
-                # #     call_params, shell=True, capture_output=False, check=True,
-                # #     text=True, stderr=subprocess.STDOUT
-                # # )
-            
-                from invoke import run
-                result = run(" ".join(final_cmd), hide=True, warn=True)
-                print(f"result: ", result)
-                # ## ----------------------------------------------------------------------
+                result = subprocess.run(
+                    final_cmd, shell=True, capture_output=False,
+                    text=True, stderr=subprocess.STDOUT
+                )
+                # print(result)
+                ## ----------------------------------------------------------------------
 
             if is_render_text_on_card:
                 box_height, box_width = get_points_dims(points=box_coordinates)
@@ -483,30 +473,13 @@ def main():
     import psutil
     cpu_workers = psutil.cpu_count(logical=False)
 
-    import argparse
-
-    # create the argument parser
-    parser = argparse.ArgumentParser()
-    # add an argument
-    parser.add_argument(
-        "-f", "--json_meta_file", type=str, required=True,
-        help="Json meta file to render cards"
-    )
-    # parse the arguments
-    args = parser.parse_args()
-
     ## ---------------------------------------------------------------------
     # Opening JSON file
     # json_meta_file = "./data/document-id-template/UAE-identity-card-front/meta.json"
-    # json_meta_file = "./data/document-id-template/Qatar-residency-id-front/meta.json"
-    # json_meta_file = "./data/digital-multimeter-1/meta.json"
-
-    json_meta_file = args.json_meta_file
-    print(f"Using json_meta_file: ", json_meta_file, " to generate new cards...")
-
+    json_meta_file = "./data/document-id-template/Qatar-residency-id-front/meta.json"
     with open(json_meta_file, encoding="utf-8") as json_file:
         meta_data = json.load(json_file)
-
+    
     # print(meta_data)
     # total_images_2_generate = 1000 # 1 # 50 # 2
     total_images_2_generate = int(input("Total images to generate: "))

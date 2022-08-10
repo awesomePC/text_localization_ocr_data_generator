@@ -6,7 +6,8 @@ import shutil
 import json
 import pandas as pd
 
-dir_base = "./data/document-id-template/UAE-identity-card-front"
+# dir_base = "./data/document-id-template/UAE-identity-card-front"
+dir_base = "./data/document-id-template/Quatar-residency-id-front"
 label_file = os.path.join(dir_base, "Label.txt")
 
 df = pd.read_csv(label_file, sep='\t', names=["filename", "annonation"], engine='python', error_bad_lines=False) ## paddleocr format
