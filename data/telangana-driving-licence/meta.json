@@ -63,7 +63,8 @@
                 "case": "title",
                 "text_color": "#D19190"
             },
-            "dict_file": "dicts/text-2--licence-number.txt"
+            "dict_file": "dicts/text-2--licence-number.txt",
+            "dict_file_multi": "dicts/multiple-values/license_strs_5000.txt"
         },
         {
             "box_type": "text",
@@ -82,7 +83,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-3--person-name.txt"
+            "dict_file": "dicts/text-3--person-name.txt",
+            "dict_file_multi": "dicts/multiple-values/person_names_5000.txt"
         },
         {
             "box_type": "text",
@@ -101,7 +103,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-4--person-second-field.txt"
+            "dict_file": "dicts/text-4--person-second-field.txt",
+            "dict_file_multi": "dicts/multiple-values/person_second_fields_5000.txt"
         },
         {
             "box_type": "text",
@@ -120,7 +123,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-5--house-number.txt"
+            "dict_file": "dicts/text-5--house-number.txt",
+            "dict_file_multi": "dicts/multiple-values/building_numbers_5000.txt"
         },
         {
             "box_type": "text",
@@ -139,7 +143,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-6--streetname.txt"
+            "dict_file": "dicts/text-6--streetname.txt",
+            "dict_file_multi": "dicts/multiple-values/street_names_5000.txt"
         },
         {
             "box_type": "text",
@@ -158,7 +163,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-7--village-name.txt"
+            "dict_file": "dicts/text-7--village-name.txt",
+            "dict_file_multi": "dicts/multiple-values/village_names_5000.txt"
         },
         {
             "box_type": "text",
@@ -177,7 +183,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-8--tahsil.txt"
+            "dict_file": "dicts/text-8--tahsil.txt",
+            "dict_file_multi": "dicts/multiple-values/tehsil_names_5000.txt"
         },
         {
             "box_type": "text",
@@ -196,7 +203,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-9--district.txt"
+            "dict_file": "dicts/text-9--district.txt",
+            "dict_file_multi": "dicts/multiple-values/district_names_5000.txt"
         },
 
         {
@@ -236,7 +244,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-11--issued-date.txt"
+            "dict_file": "dicts/text-11--issued-date.txt",
+            "dict_file_multi": "dicts/multiple-values/issued_on_dates_5000.txt"
         },
         {
             "box_type": "text",
@@ -275,7 +284,8 @@
                 "case": "title",
                 "text_color": "#585C5E"
             },
-            "dict_file": "dicts/text-13--authority-name.txt"
+            "dict_file": "dicts/text-13--authority-name.txt",
+            "dict_file_multi": "dicts/multiple-values/licensing_authoritys_5000.txt"
         }
     ]
 }
