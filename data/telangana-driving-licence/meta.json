@@ -1,0 +1,281 @@
+{
+    "project_name": "Telangna Driving Licence - front",
+    "base_dir_path": "./data/telangana-driving-licence",
+    "image_path": {
+        "original": "main.png",
+        "blank_image": "cleaned.png"
+    },
+    "boxes": [
+        {
+            "box_type": "text",
+            "box_info": "box for -- document type",
+            "box_coordinates": [[694, 205], [1325, 205], [1325, 237], [694, 237]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "value : INDIAN UNION DRIVING LICENCE",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 32,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#B2D2AA"
+            },
+            "dict_file": "dicts/text-0--indian-union-dl.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- state name",
+            "box_coordinates": [[815, 248], [1199, 248], [1199, 282], [815, 282]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "text_info": "value : TELANGANA STATE",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 32,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#B2D2AA"
+            },
+            "dict_file": "dicts/text-1--telangana-state.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- Licence number",
+            "box_coordinates": [[708, 301], [1160, 301], [1160, 345], [708, 345]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Medium",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#D19190"
+            },
+            "dict_file": "dicts/text-2--licence-number.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- person name",
+            "box_coordinates": [[700, 360], [1009, 360], [1009, 391], [700, 391]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-3--person-name.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- person second field",
+            "box_coordinates": [[700, 403], [856, 403], [856, 434], [700, 434]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-4--person-second-field.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- house number",
+            "box_coordinates": [[699, 443], [810, 443], [810, 474], [699, 474]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-5--house-number.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- street name",
+            "box_coordinates": [[699, 485], [923, 485], [923, 516], [699, 516]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-6--streetname.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- village name",
+            "box_coordinates": [[699, 529], [1073, 529], [1073, 560], [699, 560]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-7--village-name.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- tahsil",
+            "box_coordinates": [[699, 568], [849, 568], [849, 599], [699, 599]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-8--tahsil.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- district",
+            "box_coordinates": [[699, 610], [1031, 610], [1031, 641], [699, 641]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-9--district.txt"
+        },
+
+        {
+            "box_type": "text",
+            "box_info": "box for -- Signature label",
+            "box_coordinates": [[699, 758], [855, 758], [855, 793], [699, 793]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 24,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#DE8E8D"
+            },
+            "dict_file": "dicts/text-10--Signature.txt"
+        },
+
+        {
+            "box_type": "text",
+            "box_info": "box for -- issued on date",
+            "box_coordinates": [[699, 805], [1036, 805], [1036, 836], [699, 836]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-11--issued-date.txt"
+        },
+        {
+            "box_type": "text",
+            "box_info": "box for -- Licencing Authority",
+            "box_coordinates": [[1096, 763], [1402, 763], [1402, 798], [1096, 798]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Bold",
+                "bold": false,
+                "stroke_width": 0,
+                "font_size": 24,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#DE8E8D"
+            },
+            "dict_file": "dicts/text-12--Licencing-Authority.txt"
+        },
+
+        {
+            "box_type": "text",
+            "box_info": "box for -- name of authority",
+            "box_coordinates": [[1106, 809], [1368, 809], [1368, 838], [1106, 838]],
+            "alignment": "left",
+            "render_text": true,
+            "lang": "en",
+            "is_multi_lang_parts": false,
+            "font": {
+                "name": "Roboto-Regular",
+                "bold": true,
+                "stroke_width": 1,
+                "font_size": 30,
+                "margin": 3,
+                "case": "title",
+                "text_color": "#585C5E"
+            },
+            "dict_file": "dicts/text-13--authority-name.txt"
+        }
+    ]
+}

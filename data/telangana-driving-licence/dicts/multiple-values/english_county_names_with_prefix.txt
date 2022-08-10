@@ -1,0 +1,246 @@
+Nationality: Afghanistan
+Nationality: Aland Islands
+Nationality: Albania
+Nationality: Algeria
+Nationality: American Samoa
+Nationality: Andorra
+Nationality: Angola
+Nationality: Anguilla
+Nationality: Antarctica
+Nationality: Antigua and Barbuda
+Nationality: Argentina
+Nationality: Armenia
+Nationality: Aruba
+Nationality: Australia
+Nationality: Austria
+Nationality: Azerbaijan
+Nationality: Bahamas
+Nationality: Bahrain
+Nationality: Bangladesh
+Nationality: Barbados
+Nationality: Belarus
+Nationality: Belgium
+Nationality: Belize
+Nationality: Benin
+Nationality: Bermuda
+Nationality: Bhutan
+Nationality: Bolivia, Plurinational State of
+Nationality: Bonaire, Sint Eustatius and Saba
+Nationality: Bosnia and Herzegovina
+Nationality: Botswana
+Nationality: Bouvet Island
+Nationality: Brazil
+Nationality: British Indian Ocean Territory
+Nationality: Brunei Darussalam
+Nationality: Bulgaria
+Nationality: Burkina Faso
+Nationality: Burundi
+Nationality: Cambodia
+Nationality: Cameroon
+Nationality: Canada
+Nationality: Cape Verde
+Nationality: Cayman Islands
+Nationality: Central African Republic
+Nationality: Chad
+Nationality: Chile
+Nationality: China
+Nationality: Christmas Island
+Nationality: Cocos (Keeling) Islands
+Nationality: Colombia
+Nationality: Comoros
+Nationality: Congo
+Nationality: Congo, The Democratic Republic of the
+Nationality: Cook Islands
+Nationality: Costa Rica
+Nationality: Côte d'Ivoire
+Nationality: Croatia
+Nationality: Cuba
+Nationality: Curaçao
+Nationality: Cyprus
+Nationality: Czech Republic
+Nationality: Denmark
+Nationality: Djibouti
+Nationality: Dominica
+Nationality: Dominican Republic
+Nationality: Ecuador
+Nationality: Egypt
+Nationality: El Salvador
+Nationality: Equatorial Guinea
+Nationality: Eritrea
+Nationality: Estonia
+Nationality: Ethiopia
+Nationality: Falkland Islands (Malvinas)
+Nationality: Faroe Islands
+Nationality: Fiji
+Nationality: Finland
+Nationality: France
+Nationality: French Guiana
+Nationality: French Polynesia
+Nationality: French Southern Territories
+Nationality: Gabon
+Nationality: Gambia
+Nationality: Georgia
+Nationality: Germany
+Nationality: Ghana
+Nationality: Gibraltar
+Nationality: Greece
+Nationality: Greenland
+Nationality: Grenada
+Nationality: Guadeloupe
+Nationality: Guam
+Nationality: Guatemala
+Nationality: Guernsey
+Nationality: Guinea
+Nationality: Guinea-Bissau
+Nationality: Guyana
+Nationality: Haiti
+Nationality: Heard Island and McDonald Islands
+Nationality: Holy See (Vatican City State)
+Nationality: Honduras
+Nationality: Hong Kong
+Nationality: Hungary
+Nationality: Iceland
+Nationality: India
+Nationality: Indonesia
+Nationality: Iran, Islamic Republic of
+Nationality: Iraq
+Nationality: Ireland
+Nationality: Isle of Man
+Nationality: Israel
+Nationality: Italy
+Nationality: Jamaica
+Nationality: Japan
+Nationality: Jersey
+Nationality: Jordan
+Nationality: Kazakhstan
+Nationality: Kenya
+Nationality: Kiribati
+Nationality: Korea, Democratic People's Republic of
+Nationality: Korea, Republic of
+Nationality: Kuwait
+Nationality: Kyrgyzstan
+Nationality: Lao People's Democratic Republic
+Nationality: Latvia
+Nationality: Lebanon
+Nationality: Lesotho
+Nationality: Liberia
+Nationality: Libya
+Nationality: Liechtenstein
+Nationality: Lithuania
+Nationality: Luxembourg
+Nationality: Macao
+Nationality: Macedonia, Republic of
+Nationality: Madagascar
+Nationality: Malawi
+Nationality: Malaysia
+Nationality: Maldives
+Nationality: Mali
+Nationality: Malta
+Nationality: Marshall Islands
+Nationality: Martinique
+Nationality: Mauritania
+Nationality: Mauritius
+Nationality: Mayotte
+Nationality: Mexico
+Nationality: Micronesia, Federated States of
+Nationality: Moldova, Republic of
+Nationality: Monaco
+Nationality: Mongolia
+Nationality: Montenegro
+Nationality: Montserrat
+Nationality: Morocco
+Nationality: Mozambique
+Nationality: Myanmar
+Nationality: Namibia
+Nationality: Nauru
+Nationality: Nepal
+Nationality: Netherlands
+Nationality: New Caledonia
+Nationality: New Zealand
+Nationality: Nicaragua
+Nationality: Niger
+Nationality: Nigeria
+Nationality: Norfolk Island
+Nationality: Northern Mariana Islands
+Nationality: Norway
+Nationality: Oman
+Nationality: Pakistan
+Nationality: Palau
+Nationality: Palestinian Territory, Occupied
+Nationality: Panama
+Nationality: Papua New Guinea
+Nationality: Paraguay
+Nationality: Peru
+Nationality: Philippines
+Nationality: Pitcairn
+Nationality: Poland
+Nationality: Portugal
+Nationality: Puerto Rico
+Nationality: Qatar
+Nationality: Réunion
+Nationality: Romania
+Nationality: Russian Federation
+Nationality: Rwanda
+Nationality: Saint Barthélemy
+Nationality: Saint Helena, Ascension and Tristan da Cunha
+Nationality: Saint Kitts and Nevis
+Nationality: Saint Lucia
+Nationality: Saint Martin (French part)
+Nationality: Saint Pierre and Miquelon
+Nationality: Saint Vincent and the Grenadines
+Nationality: Samoa
+Nationality: San Marino
+Nationality: Sao Tome and Principe
+Nationality: Saudi Arabia
+Nationality: Senegal
+Nationality: Serbia
+Nationality: Seychelles
+Nationality: Sierra Leone
+Nationality: Singapore
+Nationality: Sint Maarten (Dutch part)
+Nationality: Slovakia
+Nationality: Slovenia
+Nationality: Solomon Islands
+Nationality: Somalia
+Nationality: South Africa
+Nationality: South Georgia and the South Sandwich Islands
+Nationality: Spain
+Nationality: Sri Lanka
+Nationality: Sudan
+Nationality: Suriname
+Nationality: South Sudan
+Nationality: Svalbard and Jan Mayen
+Nationality: Swaziland
+Nationality: Sweden
+Nationality: Switzerland
+Nationality: Syrian Arab Republic
+Nationality: Taiwan, Province of China
+Nationality: Tajikistan
+Nationality: Tanzania, United Republic of
+Nationality: Thailand
+Nationality: Timor-Leste
+Nationality: Togo
+Nationality: Tonga
+Nationality: Trinidad and Tobago
+Nationality: Tunisia
+Nationality: Turkey
+Nationality: Turkmenistan
+Nationality: Turks and Caicos Islands
+Nationality: Tuvalu
+Nationality: Uganda
+Nationality: Ukraine
+Nationality: United Arab Emirates
+Nationality: United Kingdom
+Nationality: United States
+Nationality: United States Minor Outlying Islands
+Nationality: Uruguay
+Nationality: Uzbekistan
+Nationality: Vanuatu
+Nationality: Venezuela, Bolivarian Republic of
+Nationality: Viet Nam
+Nationality: Virgin Islands, British
+Nationality: Virgin Islands, U.S.
+Nationality: Wallis and Futuna
+Nationality: Yemen
+Nationality: Zambia
+Nationality: Zimbabwe
