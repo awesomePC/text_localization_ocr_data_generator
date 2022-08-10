@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Text localization OCR data generator is a tool for data geneartion, built for the purpose of synthesizing text detection dataset. Diffrent country document ids will be generated using this tool after adding required metadata.
+Text localization OCR data generator is a tool for data generation, built for the purpose of synthesizing text detection dataset. Different country document ids will be generated using this tool after adding required metadata.
 
 ## Preparing and generating card dataset:
 
