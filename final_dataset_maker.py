@@ -27,6 +27,11 @@ def main():
         help="Base output folder to save final dataset ex. `./out/final_dataset/Qatar-resident-id-card-front-10-icdar2015-format`"
     )
     parser.add_argument(
+        "-t", "--annotation_type", type=str, required=False,
+        default="line",
+        help="Annotation type to convert either line or word . Default line"
+    )
+    parser.add_argument(
         "-d", "--out_dataset_type", type=str, required=False,
         default="icdar2015",
         help="Dataset type either PPOCRLabel, icdar2015. Default: icdar2015"
@@ -46,6 +51,7 @@ def main():
     os.makedirs(out_dataset_folder, exist_ok=True)
 
     out_dataset_type = args.out_dataset_type # "icdar2015" ## PPOCRLabel, icdar2015
+    annotation_type = args. annotation_type ## either line or word
 
     ##
     test_size = 0.10
@@ -54,16 +60,16 @@ def main():
         out_imgs_folder = os.path.join(out_dataset_folder, "imgs")
         os.makedirs(out_imgs_folder, exist_ok=True)
 
-        out_annonation_folder = os.path.join(out_dataset_folder, "annotations")
-        os.makedirs(out_annonation_folder, exist_ok=True)
+        out_annotation_folder = os.path.join(out_dataset_folder, "annotations")
+        os.makedirs(out_annotation_folder, exist_ok=True)
         # import ipdb;ipdb.set_trace()
 
-    ### List annonation files
-    raw_annonation_files = list_files(dir_base_input_folder, filter_ext=[".json"])
+    ### List annotation files
+    raw_annotation_files = list_files(dir_base_input_folder, filter_ext=[".json"])
 
     ## Split train-test
     train, test = train_test_split(
-        raw_annonation_files, 
+        raw_annotation_files, 
         test_size=test_size, random_state=42
     )
     train_set, test_set = set(train), set(test)
@@ -72,19 +78,22 @@ def main():
     lst_train_files_final_annotations = []
     lst_test_files_final_annotations = []
 
-    for raw_annonation_file in tqdm(raw_annonation_files):
-        with open(raw_annonation_file, encoding="utf-8") as json_file:
-            raw_annonation_data = json.load(json_file)
+    for raw_annotation_file in tqdm(raw_annotation_files):
+        with open(raw_annotation_file, encoding="utf-8") as json_file:
+            raw_annotation_data = json.load(json_file)
 
         ##
-        raw_line_annotations = raw_annonation_data["line_annotations"]
+        if annotation_type == "line":
+            raw_annotations = raw_annotation_data["line_annotations"]
+        else:
+            raw_annotations = raw_annotation_data["word_annotations"]
 
         lst_final_annotations = []
-        for idx, line_annonation in enumerate(raw_line_annotations):
+        for idx, annotation in enumerate(raw_annotations):
             final_annotations = {}
-            final_annotations['transcription'] = line_annonation["text"]
+            final_annotations['transcription'] = annotation["text"]
 
-            left_x, top_y, right_x, bottom_y = line_annonation["coordinates"]
+            left_x, top_y, right_x, bottom_y = annotation["coordinates"]
             line_coordinates_4points = [
                 [left_x, top_y],
                 [right_x, top_y],
@@ -96,21 +105,21 @@ def main():
             lst_final_annotations.append(final_annotations)
 
         ## image
-        raw_annonation_path = Path(raw_annonation_file)
-        file_suffix_number = raw_annonation_path.name.split("_")[0]
+        raw_annotation_path = Path(raw_annotation_file)
+        file_suffix_number = raw_annotation_path.name.split("_")[0]
         input_img_filepath = os.path.join(
-            raw_annonation_path.parent, f"{file_suffix_number}.png"
+            raw_annotation_path.parent, f"{file_suffix_number}.png"
         )
 
-        inp_parent_foldername = os.path.basename(str(raw_annonation_path.parent))
-        # os.path.basename(str(raw_annonation_path.parent)).split("_")
+        inp_parent_foldername = os.path.basename(str(raw_annotation_path.parent))
+        # os.path.basename(str(raw_annotation_path.parent)).split("_")
 
         if out_dataset_type == "icdar2015":
             all_gt = []
-            for single_annonation in lst_final_annotations:
-                # print(f"single_annonation: ", single_annonation)
-                transcription = single_annonation["transcription"]
-                points = single_annonation["points"]
+            for single_annotation in lst_final_annotations:
+                # print(f"single_annotation: ", single_annotation)
+                transcription = single_annotation["transcription"]
+                points = single_annotation["points"]
                 flatten_points = reduce(operator.concat, points)
                 # only_arabic_transcription = regex.sub(r'[^\u0600-\u06FF]', u'', transcription)
 
@@ -129,10 +138,10 @@ def main():
 
             ## Write gt file and image to disk
             out_img_name = f"{file_suffix_number}.png"
-            if raw_annonation_file in train_set:
+            if raw_annotation_file in train_set:
                 training_foldername = "training"
                 out_gt_filepath = os.path.join(
-                    out_annonation_folder, training_foldername,
+                    out_annotation_folder, training_foldername,
                     f"gt_{file_suffix_number}.txt"
                 )
                 out_img_filepath = os.path.join(
@@ -142,7 +151,7 @@ def main():
             else:
                 test_foldername = "test"
                 out_gt_filepath = os.path.join(
-                    out_annonation_folder, test_foldername,
+                    out_annotation_folder, test_foldername,
                     f"gt_{file_suffix_number}.txt"
                 )
                 out_img_filepath = os.path.join(
@@ -162,13 +171,13 @@ def main():
             out_img_filepath = os.path.join(out_dataset_folder, out_img_name)
             shutil.copy2(input_img_filepath, out_img_filepath)
 
-            # shutil.copy2(raw_annonation_file, out_raw_annonation_file) ## Copy raw json -- optional
+            # shutil.copy2(raw_annotation_file, out_raw_annotation_file) ## Copy raw json -- optional
 
             data = {
                 "filename": f"{out_dataset_name}/{out_img_name}",
-                "annonation": lst_final_annotations
+                "annotation": lst_final_annotations
             }
-            if raw_annonation_file in train_set:
+            if raw_annotation_file in train_set:
                 lst_train_files_final_annotations.append(data)
             else:
                 lst_test_files_final_annotations.append(data)
