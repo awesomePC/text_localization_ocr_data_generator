@@ -77,21 +77,36 @@ def np_encoder(object):
         return object.tolist()
         
 def augment_ocr_image(
-        line_annotations, image, seq
+        annotations, image, seq
     ):
     """
     Augment OCR Image with minimal area bounding boxes
 
     Args:
-        line_annotations (_type_): _description_
+        annotations (_type_): _description_
         image (_type_): _description_
         seq (_type_): _description_
         is_visualize_4points_boxes (bool, optional): _description_. Defaults to False.
     """
     lst_polys = []
+
+    ## 1. First get line annotations and append in list
+    line_annotations = annotations["line_annotations"]
     for idx, line_coords in enumerate(line_annotations):
         first_line_coords = line_annotations[idx]["coordinates"]
         x1, y1, x2, y2 = first_line_coords
+        poly = BoundingBox.to_polygon(
+            BoundingBox(x1=x1, y1=y1, x2=x2, y2=y2)
+        )
+        # print(f"poly: ", poly)
+        lst_polys.append(poly)
+
+    ## 2. second get word annotations and append in list
+    ## Append in same list we can separate it later after augmentation
+    word_annotations = annotations["word_annotations"]
+    for idx, word_coords in enumerate(word_annotations):
+        first_word_coords = word_annotations[idx]["coordinates"]
+        x1, y1, x2, y2 = first_word_coords
         poly = BoundingBox.to_polygon(
             BoundingBox(x1=x1, y1=y1, x2=x2, y2=y2)
         )
@@ -149,7 +164,60 @@ def augment_ocr_image(
     else:
         is_all_boxes_inside_image = True
 
-    return (image_aug, lst_four_points, is_all_boxes_inside_image)
+    ## Split augmented annotations inti again line and words level -- separate it
+    aug_line_annotations = lst_four_points[0:(len(line_annotations)-1)]
+    aug_word_annotations = lst_four_points[len(line_annotations):]
+
+    ## Save modified annotations
+    new_line_annotations = []
+    for i, four_points in enumerate(aug_line_annotations):
+        new_line_annotations.append(
+            {
+                "text": line_annotations[i]["text"],
+                "coordinates": four_points
+            }
+        )
+
+    new_word_annotations = []
+    for i, word_four_points in enumerate(aug_word_annotations):
+        new_word_annotations.append(
+            {
+                "text": word_annotations[i]["text"],
+                "coordinates": word_four_points
+            }
+        )
+        
+    new_aug_annotations = {
+        "new_line_annotations": new_line_annotations,
+        "new_word_annotations": new_word_annotations
+    }
+
+    return (image_aug, new_aug_annotations, is_all_boxes_inside_image)
+
+def visualize_save_aug_boxes_img(
+    pil_img_aug, lst_four_points, 
+    output_folder, path_object,
+    is_visualize_4points_boxes=False,
+    save_visualized_augmented_image=True,
+    vis_color='lime', vis_width=2,
+    vis_text_fill_color="orange"
+    ):
+    # is_visualize_4points_boxes = True
+    if (is_visualize_4points_boxes) or (save_visualized_augmented_image):
+        pil_img_aug_visualized = draw_boxes(
+            pil_img_aug.copy(), lst_four_points, color=vis_color, width=vis_width, text_font_size=14, 
+            text_fill_color=vis_text_fill_color
+        )
+        
+        if is_visualize_4points_boxes:
+            pil_img_aug_visualized.show()
+            # input(f"Press any key to continue...")
+
+        if (save_visualized_augmented_image):
+            # pil_img_aug_visualized.convert("RGB").save("visualized_augmented_boxes.jpg")
+            visualized_aug_out_file_path = os.path.join(output_folder, path_object.name)
+            os.makedirs(os.path.dirname(visualized_aug_out_file_path), exist_ok=True)
+            pil_img_aug_visualized.save(visualized_aug_out_file_path)
 
 
 def str2bool(v):
@@ -331,16 +399,15 @@ def main():
         ## you can split augmented boxes list based on index and get 
         with open(json_annotation_file) as f:
             annotations = json.load(f)
-            line_annotations = annotations["line_annotations"]
 
-        logger.debug(f"line_annotations: {line_annotations} \n")
+        logger.debug(f"annotations: {annotations} \n")
 
         ## Augment ocr annotation image with coordinates
         ## Add in loop incase if boxes goes outside then generate new
         is_all_boxes_inside_image = True
         for k in range(0, 5):
-            image_aug, lst_four_points, is_all_boxes_inside_image = augment_ocr_image(
-                line_annotations, image, seq
+            image_aug, new_aug_annotations, is_all_boxes_inside_image = augment_ocr_image(
+                annotations, image, seq
             )
             if (is_all_boxes_inside_image):
                 ## If all boxes inside image after applying augmentation then it's valid aug , no need to generate new
@@ -356,20 +423,12 @@ def main():
         aug_out_file_path = os.path.join(aug_out_sub_folder, p.name)
         pil_img_aug.save(aug_out_file_path)
 
-        ## Save modified annotations
-        new_line_annotations = []
-        for i, four_points in enumerate(lst_four_points):
-            new_line_annotations.append(
-                {
-                    "text": line_annotations[i]["text"],
-                    "coordinates": four_points
-                }
-            )
         ## --------------------------------------------------------
         ## Write meta in json
         final_meta = {
-            "line_annotations": new_line_annotations,
-            "word_annotations": [], # new_word_annotations, ## TODO -- add later
+            "line_annotations": new_aug_annotations["new_line_annotations"],
+            "word_annotations": new_aug_annotations["new_word_annotations"],
+            "is_augmented_boxes": True
         }
         # import pdb; pdb.set_trace()
 
@@ -381,26 +440,29 @@ def main():
             final_meta = json.loads(json.dumps(final_meta, default=np_encoder))
             json.dump(final_meta, outfile, indent=4, ensure_ascii=False)
     
+        ## Visualize line annotations if enabled and save
+        line_cords = [e["coordinates"] for e in new_aug_annotations["new_line_annotations"]]
+        visualize_save_aug_boxes_img(
+            pil_img_aug,
+            line_cords,
+            output_folder=os.path.join(
+                output_base_folder, "visualized_box_imgs", "line_level"
+            ),
+            path_object=p
+        )
+        ## Visualize word level annotations if enabled and save
+        word_coords = [e["coordinates"] for e in new_aug_annotations["new_word_annotations"]]
+        visualize_save_aug_boxes_img(
+            pil_img_aug,
+            word_coords,
+            output_folder=os.path.join(
+                output_base_folder, "visualized_box_imgs", "word_level"
+            ),
+            path_object=p
+        )
 
-        # is_visualize_4points_boxes = True
-        if (is_visualize_4points_boxes) or (save_visualized_augmented_image):
-            pil_img_aug_visualized = draw_boxes(
-                pil_img_aug.copy(), lst_four_points, color='lime', width=2, text_font_size=14, 
-                text_fill_color="orange"
-            )
-            
-            if is_visualize_4points_boxes:
-                pil_img_aug_visualized.show()
-                # input(f"Press any key to continue...")
-
-            if (save_visualized_augmented_image):
-                # pil_img_aug_visualized.convert("RGB").save("visualized_augmented_boxes.jpg")
-                visualized_aug_out_file_path = os.path.join(output_base_folder, "visualized_box_imgs", p.name)
-                os.makedirs(os.path.dirname(visualized_aug_out_file_path), exist_ok=True)
-                pil_img_aug_visualized.save(visualized_aug_out_file_path)
-
-        # if (index_img > 10):
-        #     break # for dev
+        if (index_img > 1):
+            break # for dev
         
 
 if __name__ == "__main__":
