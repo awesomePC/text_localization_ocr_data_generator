@@ -316,7 +316,7 @@ def main():
 
         image = np.asarray(pil_img)
 
-        logger.info(f"image.shape: {image.shape}")
+        logger.debug(f"image.shape: {image.shape}")
 
         json_filename = f"{p.stem}_annotations.json"
         json_annotation_file = p.with_name(json_filename)
