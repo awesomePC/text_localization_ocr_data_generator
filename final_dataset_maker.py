@@ -93,13 +93,25 @@ def main():
             final_annotations = {}
             final_annotations['transcription'] = annotation["text"]
 
-            left_x, top_y, right_x, bottom_y = annotation["coordinates"]
-            line_coordinates_4points = [
-                [left_x, top_y],
-                [right_x, top_y],
-                [right_x, bottom_y],
-                [left_x, bottom_y]
-            ]
+            # import pdb; pdb.set_trace()
+
+            if isinstance(annotation["coordinates"][0], list):
+                ## If already 4 points minimal rectangle
+                line_coordinates_4points = annotation["coordinates"]
+            else:
+                ## If rectangle values -- 4 integer values only
+                left_x, top_y, right_x, bottom_y = annotation["coordinates"]
+
+                line_coordinates_4points = [
+                    [left_x, top_y],
+                    [right_x, top_y],
+                    [right_x, bottom_y],
+                    [left_x, bottom_y]
+                ]
+            
+            ## make int values
+            line_coordinates_4points = np.asarray(line_coordinates_4points).astype("int").tolist()
+
             final_annotations['points'] = line_coordinates_4points
             final_annotations['difficult'] = False
             lst_final_annotations.append(final_annotations)
