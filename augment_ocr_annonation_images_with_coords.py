@@ -306,7 +306,7 @@ def main():
 
     img_files = list_files(base_input_folder, filter_ext=[".png", ".jpeg", ".jpg"])
 
-    for index_img, image_file in tqdm(enumerate(img_files)):
+    for index_img, image_file in enumerate(tqdm(img_files)):
         p = Path(image_file)
         pil_img = Image.open(image_file)
 
