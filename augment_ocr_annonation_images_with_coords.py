@@ -397,8 +397,8 @@ def main():
                 os.makedirs(os.path.dirname(visualized_aug_out_file_path), exist_ok=True)
                 pil_img_aug_visualized.save(visualized_aug_out_file_path)
 
-        if (index_img > 10):
-            break # for dev
+        # if (index_img > 10):
+        #     break # for dev
         
 
 if __name__ == "__main__":
