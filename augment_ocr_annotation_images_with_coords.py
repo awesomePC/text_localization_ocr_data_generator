@@ -196,7 +196,7 @@ def augment_ocr_image(
 
 def visualize_save_aug_boxes_img(
     pil_img_aug, lst_four_points, 
-    output_folder, path_object,
+    visualized_aug_out_file_path,
     is_visualize_4points_boxes=False,
     save_visualized_augmented_image=True,
     vis_color='lime', vis_width=2,
@@ -215,7 +215,7 @@ def visualize_save_aug_boxes_img(
 
         if (save_visualized_augmented_image):
             # pil_img_aug_visualized.convert("RGB").save("visualized_augmented_boxes.jpg")
-            visualized_aug_out_file_path = os.path.join(output_folder, path_object.name)
+            # visualized_aug_out_file_path = os.path.join(output_folder, path_object.name)
             os.makedirs(os.path.dirname(visualized_aug_out_file_path), exist_ok=True)
             pil_img_aug_visualized.save(visualized_aug_out_file_path)
 
@@ -376,6 +376,7 @@ def main():
 
     img_files = list_files(base_input_folder, filter_ext=[".png", ".jpeg", ".jpg"])
 
+    ## TODO: Add feature to generate more augmentation sample per image
     for index_img, image_file in enumerate(tqdm(img_files)):
         p = Path(image_file)
         pil_img = Image.open(image_file)
@@ -445,24 +446,23 @@ def main():
         visualize_save_aug_boxes_img(
             pil_img_aug,
             line_cords,
-            output_folder=os.path.join(
-                output_base_folder, "visualized_box_imgs", "line_level"
+            visualized_aug_out_file_path=os.path.join(
+                output_base_folder, "visualized_box_imgs", "line_level", p.name
             ),
-            path_object=p
         )
         ## Visualize word level annotations if enabled and save
         word_coords = [e["coordinates"] for e in new_aug_annotations["new_word_annotations"]]
         visualize_save_aug_boxes_img(
             pil_img_aug,
             word_coords,
-            output_folder=os.path.join(
-                output_base_folder, "visualized_box_imgs", "word_level"
+            visualized_aug_out_file_path=os.path.join(
+                output_base_folder, "visualized_box_imgs", "word_level", p.name
             ),
-            path_object=p
         )
 
-        if (index_img > 1):
-            break # for dev
+        # if (index_img > 1):
+        #     logger.error("Early stopping due to break statement...")
+        #     break # for dev only
         
 
 if __name__ == "__main__":
