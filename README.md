@@ -4,6 +4,12 @@
 
 Text localization OCR data generator is a tool for data generation, built for the purpose of synthesizing text detection dataset. Different country document ids will be generated using this tool after adding required metadata.
 
+## Cone repo
+
+    ```console
+    $ git clone --recurse-submodules https://github.com/Nivratti/text-localization-ocr-data-generator.git
+    ```
+    
 ## Preparing and generating card dataset:
 
 1. Select card image to generate data ex. Quatar resident id.

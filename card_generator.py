@@ -11,9 +11,12 @@ import json
 
 from visualization import draw_boxes
 
-from python_arabic_reshaper import arabic_reshaper
-from bidi.algorithm import get_display
-
+try:
+    from python_arabic_reshaper import arabic_reshaper
+    from bidi.algorithm import get_display
+except:
+    print(f"Error laoding arabic_reshaper")
+    
 parent_folder = os.path.dirname(os.path.abspath(__file__))
 submodule_path = os.path.join(parent_folder, "TextRecognitionDataGenerator")
 sys.path.append(submodule_path)

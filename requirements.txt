@@ -1,3 +1,5 @@
+nb_utils
+opencv-python
 pillow
 tqdm
 loguru
@@ -11,3 +13,4 @@ imutils
 
 psutil
 sklearn
+invoke
