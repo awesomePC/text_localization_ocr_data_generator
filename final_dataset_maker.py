@@ -36,6 +36,11 @@ def main():
         default="icdar2015",
         help="Dataset type either PPOCRLabel, icdar2015. Default: icdar2015"
     )
+    parser.add_argument(
+        "-p", "--test_dataset_ratio", type=float, required=False,
+        default=0.10,
+        help="Test dataset percentage 0 to max 1. Default 0.1 means 10% of whole data"
+    )
     # parse the arguments
     args = parser.parse_args()
 
@@ -54,7 +59,7 @@ def main():
     annotation_type = args. annotation_type ## either line or word
 
     ##
-    test_size = 0.10
+    test_size = args.test_dataset_ratio # 0.10
 
     if out_dataset_type == "icdar2015":
         out_imgs_folder = os.path.join(out_dataset_folder, "imgs")
