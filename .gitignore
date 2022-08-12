@@ -2,3 +2,5 @@ out-sample-word-level-bboxes/
 out/
 tmp.py
 data/output_result
+
+*.pyc
