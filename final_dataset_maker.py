@@ -1,3 +1,6 @@
+"""
+Final training dataset format generator -- takes exported cards labels as input
+"""
 import os
 import json
 import shutil
@@ -177,10 +180,12 @@ def main():
 
             os.makedirs(os.path.dirname(out_gt_filepath), exist_ok=True)
             os.makedirs(os.path.dirname(out_img_filepath), exist_ok=True)
-
+            
+            ## Save ground-truth
             with open(out_gt_filepath, 'w', encoding="utf-8") as file:
                 file.write('\n'.join(all_gt))
 
+            ## save image
             shutil.copy2(input_img_filepath, out_img_filepath)
         else:
             ## default PPOCRLabel format
