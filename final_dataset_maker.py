@@ -35,7 +35,7 @@ def main():
         help="Annotation type to convert either line or word . Default line"
     )
     parser.add_argument(
-        "-d", "--out_dataset_type", type=str, required=False,
+        "-d", "--det_out_dataset_format", type=str, required=False,
         default="icdar2015",
         help="Dataset type either PPOCRLabel, icdar2015. Default: icdar2015"
     )
@@ -58,13 +58,13 @@ def main():
     out_dataset_name = os.path.basename(out_dataset_folder)
     os.makedirs(out_dataset_folder, exist_ok=True)
 
-    out_dataset_type = args.out_dataset_type # "icdar2015" ## PPOCRLabel, icdar2015
+    det_out_dataset_format = args.det_out_dataset_format # "icdar2015" ## PPOCRLabel, icdar2015
     annotation_type = args. annotation_type ## either line or word
 
     ##
     test_size = args.test_dataset_ratio # 0.10
 
-    if out_dataset_type == "icdar2015":
+    if det_out_dataset_format == "icdar2015":
         out_imgs_folder = os.path.join(out_dataset_folder, "imgs")
         os.makedirs(out_imgs_folder, exist_ok=True)
 
@@ -134,7 +134,7 @@ def main():
         inp_parent_foldername = os.path.basename(str(raw_annotation_path.parent))
         # os.path.basename(str(raw_annotation_path.parent)).split("_")
 
-        if out_dataset_type == "icdar2015":
+        if det_out_dataset_format == "icdar2015":
             all_gt = []
             for single_annotation in lst_final_annotations:
                 # print(f"single_annotation: ", single_annotation)
@@ -204,7 +204,7 @@ def main():
             else:
                 lst_test_files_final_annotations.append(data)
 
-    if out_dataset_type == "PPOCRLabel":
+    if det_out_dataset_format == "PPOCRLabel":
         # # import ipdb; ipdb.set_trace()
         ## Write final annotations
         df_train = pd.DataFrame(lst_train_files_final_annotations)
