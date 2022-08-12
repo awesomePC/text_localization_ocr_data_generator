@@ -117,7 +117,7 @@ def generate_data_and_cards(
     image_index=0, meta_data={}, 
     total_images_2_generate=1,
     is_generate_text=True, is_render_text_on_card=False,
-    thread_count=1,
+    output_base_dir=None, thread_count=1,
     ):
     """
     1. Generate card data using text recognition data generator 
@@ -131,7 +131,11 @@ def generate_data_and_cards(
     base_dir = base_dir_path # "./data/document-id-template/UAE-identity-card-front"
 
     # ## ----------------------------------------------------------------------
-    generated_data_root_dir = os.path.join("out", project_name, f"synth_imgs_data")
+    if output_base_dir:
+        generated_data_root_dir = os.path.join(output_base_dir, f"synth_imgs_data")
+    else:
+        generated_data_root_dir = os.path.join("out", project_name, f"synth_imgs_data")
+
     os.makedirs(generated_data_root_dir, exist_ok=True)
 
     ## Main config for rendering card
@@ -146,7 +150,11 @@ def generate_data_and_cards(
     doc_cleaned_img_file = os.path.join(base_dir, blank_image_path) # "cleaned.png")
     document_bg_img = Image.open(doc_cleaned_img_file).convert("RGBA")
 
-    out_dir_cards = os.path.join("out", project_name, f"synth_cards")
+    if output_base_dir:
+        out_dir_cards = os.path.join(output_base_dir, f"synth_cards")
+    else:
+        out_dir_cards = os.path.join("out", project_name, f"synth_cards")
+
     os.makedirs(out_dir_cards, exist_ok=True)
     ## end--Main config for rendering card
 
@@ -483,7 +491,9 @@ def generate_data_and_cards(
                 line_visualized_out_dir, f"{image_index:04}_visualized.png"
             )
         )
-    return True
+    # print(f"Generated cards stored in : {os.path.dirname(out_dir_cards)}")
+    # return True
+    return out_dir_cards
 
 
 def main():
@@ -502,8 +512,14 @@ def main():
         "-f", "--json_meta_file", type=str, required=True,
         help="Json meta file to render cards"
     )
+    parser.add_argument(
+        "-o", "--output_base_dir", type=str, required=False,
+        help="Output dataset base dir to store generated cards .. default to ./out/name_of_task"
+    )
     # parse the arguments
     args = parser.parse_args()
+    
+    output_base_dir = args.output_base_dir ## if user pass
 
     ## ---------------------------------------------------------------------
     # Opening JSON file
@@ -525,6 +541,7 @@ def main():
     generate_data_and_cards(
         meta_data=meta_data, 
         total_images_2_generate=total_images_2_generate,
+        output_base_dir=output_base_dir,
         thread_count=cpu_workers,
     )
 
@@ -548,11 +565,17 @@ def main():
     kwargs = {
         'meta_data': meta_data,
         'is_generate_text': False,
-        'is_render_text_on_card': True
+        'is_render_text_on_card': True,
+        'output_base_dir': output_base_dir
     }
     jobs = range(0, total_images_2_generate)  # file_rel_paths
 
     result = process_map(partial(worker, **kwargs), jobs, max_workers=cpu_workers, chunksize=1)
+
+    ## print info
+    out_dir_cards = result[0]
+    print(f"\nGenerated cards stored in : {os.path.dirname(out_dir_cards)} \n")
+
     return result
 
 
