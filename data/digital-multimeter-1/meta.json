@@ -12,11 +12,11 @@
             "box_coordinates": [[525, 147], [877, 147], [877, 250], [525, 250]],
             "alignment": "right",
             "render_text": true,
-            "lang": "ar",
+            "lang": "en",
             "text_info": "3-or-4-digit-number",
             "is_multi_lang_parts": false,
             "font": {
-                "name": "Roboto-Bold",
+                "name": "Seven Segment",
                 "bold": false,
                 "stroke_width": 0,
                 "font_size": 36,
