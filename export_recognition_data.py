@@ -102,12 +102,12 @@ def main():
 
             if isinstance(annotation["coordinates"][0], list):
                 ## If already 4 points minimal rectangle
-                line_coordinates_4points = annotation["coordinates"]
+                coordinates_4points = annotation["coordinates"]
             else:
                 ## If rectangle values -- 4 integer values only
                 left_x, top_y, right_x, bottom_y = annotation["coordinates"]
 
-                line_coordinates_4points = [
+                coordinates_4points = [
                     [left_x, top_y],
                     [right_x, top_y],
                     [right_x, bottom_y],
@@ -115,7 +115,7 @@ def main():
                 ]
             
             ## make int values
-            line_coordinates_4points = np.asarray(line_coordinates_4points).astype("int").tolist()
+            coordinates_4points = np.asarray(coordinates_4points).astype("int").tolist()
             
 
             if margins[0]:
@@ -123,12 +123,12 @@ def main():
                 # import pdb;pdb.set_trace()
                 margin_top, margin_left, margin_bottom, margin_right = margins
 
-                line_coordinates_4points = expand_box(
-                    line_coordinates_4points,
+                coordinates_4points = expand_box(
+                    coordinates_4points,
                     margin_top, margin_left, margin_bottom, margin_right
                 )
 
-            final_annotations['points'] = line_coordinates_4points
+            final_annotations['points'] = coordinates_4points
             final_annotations['difficult'] = False
             lst_final_annotations.append(final_annotations)
 
