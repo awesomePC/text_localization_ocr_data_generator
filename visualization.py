@@ -31,21 +31,21 @@ def draw_boxes(image, bounds, color='lime', width=2, text_font_size=14, text_fil
       
         if auto_unique_color:
             color = random.choice(colors_list)
-        # # print(bound)
-        # if len(np.array(bound).shape) == 1: 
-        #     ## rectangle
-        #     xmin, xmax, ymin, ymax = bound
-        #     draw.rectangle([xmin, ymin, xmax, ymax], outline=color, width=width)
-        # else:
-        #     # Polygon
-        #     p0, p1, p2, p3 = bound
-        #     draw.line([*p0, *p1, *p2, *p3, *p0], fill=color, width=width)
-        xmin, xmax, ymin, ymax = bound
-        draw.rectangle([xmin, ymin, xmax, ymax], outline=color, width=width)
-          
+        # print(bound)
+        if len(np.array(bound).shape) == 1: 
+            ## rectangle
+            xmin, ymin, xmax, ymax = bound
+            draw.rectangle([xmin, ymin, xmax, ymax], outline=color, width=width)
+            point_text_draw = (xmin, ymin)
+        else:
+            # Polygon
+            p0, p1, p2, p3 = bound
+            draw.line([*p0, *p1, *p2, *p3, *p0], fill=color, width=width)
+            point_text_draw = p0
+
         if draw_text_idx:
             text = f"{idx}"
-            draw.text((xmin, ymin), text, font=font, align ="left", fill=text_fill_color) 
+            draw.text(point_text_draw, text, font=font, align ="left", fill=text_fill_color) 
         
     return image
 
