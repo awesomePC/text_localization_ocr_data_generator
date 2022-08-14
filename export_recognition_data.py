@@ -16,6 +16,8 @@ from sklearn.model_selection import train_test_split
 from image_cropping import crop_img_boxes
 import cv2
 from PIL import Image
+from margin_utils import margins_arg_parse, expand_box
+
 
 def main():
     import argparse
@@ -37,10 +39,21 @@ def main():
         help="Annotation type to convert either line or word . Default line"
     )
     parser.add_argument(
-        "-p", "--test_dataset_ratio", type=float, required=False,
+        "-ratio", "--test_dataset_ratio", type=float, required=False,
         default=0.10,
-        help="Test dataset percentage 0 to max 1. Default 0.1 means 10% of whole data"
+        help="Test dataset percentage 0 to max 1. Default 0.1 means 10 percent of whole data"
     )
+
+    parser.add_argument(
+        "-m",
+        "--margins",
+        type=margins_arg_parse,
+        nargs="?",
+        help="Define the margins around the main box for cropping. In pixels, If single value then 4 times it will be repeated",
+        default=(0, 0, 0, 0),
+    )
+
+    # , nargs='+', type=int
     # parse the arguments
     args = parser.parse_args()
 
@@ -54,6 +67,8 @@ def main():
 
     ##
     test_size = args.test_dataset_ratio # 0.10
+
+    margins = args.margins
 
     ### List annotation files
     raw_annotation_files = list_files(dir_base_input_folder, filter_ext=[".json"])
@@ -101,6 +116,17 @@ def main():
             
             ## make int values
             line_coordinates_4points = np.asarray(line_coordinates_4points).astype("int").tolist()
+            
+
+            if margins[0]:
+                ## add margin around it
+                # import pdb;pdb.set_trace()
+                margin_top, margin_left, margin_bottom, margin_right = margins
+
+                line_coordinates_4points = expand_box(
+                    line_coordinates_4points,
+                    margin_top, margin_left, margin_bottom, margin_right
+                )
 
             final_annotations['points'] = line_coordinates_4points
             final_annotations['difficult'] = False
