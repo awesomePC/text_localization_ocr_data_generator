@@ -130,6 +130,10 @@ def main():
         input_img_filepath = os.path.join(
             raw_annotation_path.parent, f"{file_suffix_number}.png"
         )
+        if not os.path.exists(input_img_filepath):
+            input_img_filepath = Path(input_img_filepath).with_suffix(".jpg")
+            if not os.path.exists(input_img_filepath):
+                input_img_filepath = Path(input_img_filepath).with_suffix(".jpeg")
 
         inp_parent_foldername = os.path.basename(str(raw_annotation_path.parent))
         # os.path.basename(str(raw_annotation_path.parent)).split("_")
