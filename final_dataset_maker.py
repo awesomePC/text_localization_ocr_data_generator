@@ -195,9 +195,10 @@ def main():
 
             # shutil.copy2(raw_annotation_file, out_raw_annotation_file) ## Copy raw json -- optional
 
+            # Enclose values in double quotes for annonation -- otherwise training script will give error
             data = {
                 "filename": f"{out_dataset_name}/{out_img_name}",
-                "annotation": lst_final_annotations
+                "annotation": json.dumps(lst_final_annotations)
             }
             if raw_annotation_file in train_set:
                 lst_train_files_final_annotations.append(data)
