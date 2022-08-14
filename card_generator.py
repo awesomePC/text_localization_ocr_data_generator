@@ -477,7 +477,7 @@ def generate_data_and_cards(
         for line_annonation in line_annotations:
             line_coordinates = line_annonation["coordinates"]
             x1, y1, x2, y2 = line_coordinates
-            bounds.append([x1, x2, y1, y2])
+            bounds.append([x1, y1, x2, y2])
 
         # this function call the visualize method to draw the boxes around text
         draw_boxes(img_pil, bounds=bounds, color='lime', width=1, text_font_size=14, text_fill_color="orange", draw_text_idx=True)
@@ -547,12 +547,12 @@ def main():
 
     ###
     ## TODO: AFter rendering word/line box images at once using text recognition data generator
-    ## We have used two diffrent dictionaries -- so in cards
+    ## We have used two different dictionaries -- so in cards
     ## English name and arabic name is not same in rendered card 
-    ## As textrecognition datagenerator picking random index value for diffrent dict
+    ## As textrecognition data-generator picking random index value for different dict
 
     ## Step 2: Generate cards -- render data
-    print(f"\nProcessign step 2: Rendering cards")
+    print(f"\nProcessing step 2: Rendering cards")
     # for image_index in tqdm(range(0, total_images_2_generate)):
     #     generate_data_and_cards(
     #         image_index=image_index,
