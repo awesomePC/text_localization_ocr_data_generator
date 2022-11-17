@@ -9,7 +9,7 @@
         {
             "box_type": "text",
             "box_info": "Country name in english",
-            "box_coordinates": [[13, 13], [181, 13], [181, 27], [13, 27]],
+            "box_coordinates": [[13, 11], [181, 11], [181, 28], [13, 28]],
             "alignment": "left",
             "render_text": true,
             "lang": "en",
@@ -46,7 +46,7 @@
         },
         {
             "box_type": "text",
-            "box_coordinates": [[55, 44], [145, 44], [145, 58], [55, 58]],
+            "box_coordinates": [[55, 42], [145, 42], [145, 59], [55, 59]],
             "alignment": "left",
             "render_text": true,
             "lang": "en",
@@ -65,7 +65,7 @@
         {
             "box_type": "text",
             "box_info": "Document type in Arabic",
-            "box_coordinates": [[296, 37], [380, 37], [380, 59], [296, 59]],
+            "box_coordinates": [[296, 36], [380, 36], [380, 60], [296, 60]],
             "alignment": "left",
             "render_text": true,
             "lang": "ar",
@@ -83,7 +83,7 @@
         },
         {
             "box_type": "text",
-            "box_coordinates": [[162, 87], [297, 87], [297, 105], [162, 105]],
+            "box_coordinates": [[162, 85], [297, 85], [297, 104], [162, 104]],
             "alignment": "left",
             "render_text": true,
             "lang": "mixed",
@@ -102,7 +102,7 @@
                     "dict_file": "dicts/text-4--subset-0--Identity-number-string.txt"
                 },
                 {
-                    "lang": "ar",
+                    "lang": "ar", 
                     "text_info": "رقم الهوية",
                     "font": {
                         "name": "Times-New-Roman",
@@ -117,7 +117,7 @@
         },
         {
             "box_type": "text",
-            "box_coordinates": [[165, 107], [293, 107], [293, 118], [165, 118]],
+            "box_coordinates": [[165, 106], [293, 106], [293, 118], [165, 118]],
             "alignment": "left",
             "render_text": true,
             "lang": "en",
@@ -138,7 +138,7 @@
         {
             "box_type": "text",
             "box_info": "Person name in Arabic",
-            "box_coordinates": [[38, 167], [305, 167], [305, 184], [38, 184]],
+            "box_coordinates": [[38, 164], [305, 164], [305, 186], [38, 186]],
             "alignment": "right",
             "render_text": true,
             "lang": "ar",
@@ -158,7 +158,7 @@
         },
         {
             "box_type": "text",
-            "box_coordinates": [[18, 202], [304, 202], [304, 214], [18, 214]],
+            "box_coordinates": [[18, 199], [304, 199], [304, 216], [18, 216]],
             "alignment": "left",
             "render_text": true,
             "lang": "en",
@@ -179,7 +179,7 @@
         {
             "box_type": "text",
             "box_info": "Nationality in Arabic",
-            "box_coordinates": [[46, 231], [305, 231], [305, 247], [46, 247]],
+            "box_coordinates": [[46, 226], [305, 226], [305, 249], [46, 249]],
             "alignment": "right",
             "render_text": true,
             "lang": "ar",
@@ -198,7 +198,7 @@
         },
         {
             "box_type": "text",
-            "box_coordinates": [[18, 251], [274, 251], [274, 263], [18, 263]],
+            "box_coordinates": [[18, 249], [274, 249], [274, 266], [18, 266]],
             "alignment": "left",
             "render_text": true,
             "lang": "en",

@@ -173,7 +173,7 @@ def main():
 
     ### List annotation files
     raw_annotation_files = list_files(dir_base_input_folder, filter_ext=[".json"])
-
+    
     worker = wrapper_expand_boxes  # function to map
     kwargs = {
         'margins': margins

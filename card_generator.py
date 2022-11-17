@@ -304,11 +304,11 @@ def generate_data_and_cards(
 
                 ## Check is it contains multiple language parts
                 total_parts = 0
-                if alignment == "left":
-                    last_rendered_image_topright_coordinates = box_coordinates[0] ##  Used if multiple parts
+                if alignment == "right" or language == "ar":
+                    last_rendered_image_topright_coordinates = box_coordinates[1] # for arabic get from right side
                 else:
-                    ## From right side
-                    last_rendered_image_topright_coordinates = box_coordinates[1] ##  Used if multiple parts
+                    ## From left side
+                    last_rendered_image_topright_coordinates = box_coordinates[0] ##  Used if multiple parts
 
                 word_image_file = os.path.join(dest_dir, f"{image_index}.png")
                 word_img = Image.open(word_image_file).convert("RGBA")
@@ -317,11 +317,11 @@ def generate_data_and_cards(
                 width_word_img = word_img.size[0]
 
                 if part_index >= 1:
-                    if alignment == "left":
-                        new_position_x = last_rendered_image_topright_coordinates[0]
+                    if alignment == "right" or language == "ar":
+                        new_position_x = last_rendered_image_topright_coordinates[0] - width_word_img
                         new_position_y = box_coordinates[0][1]
                     else:
-                        new_position_x = last_rendered_image_topright_coordinates[0] - width_word_img
+                        new_position_x = last_rendered_image_topright_coordinates[0]
                         new_position_y = box_coordinates[0][1]
                 else:
                     if alignment == "left":
@@ -491,6 +491,28 @@ def generate_data_and_cards(
                 line_visualized_out_dir, f"{image_index:04}_visualized.png"
             )
         )
+
+        ## word annotations
+        img_pil = document_bg_img.copy()
+        bounds = []
+        for word_annotation in word_annotations:
+            word_coordinates = word_annotation["coordinates"]
+            x1, y1, x2, y2 = word_coordinates
+            bounds.append([x1, y1, x2, y2])
+
+        # this function call the visualize method to draw the boxes around text
+        draw_boxes(img_pil, bounds=bounds, color='orange', width=1, text_font_size=14, text_fill_color="orange", draw_text_idx=True)
+        # display(img_pil)
+        word_visualized_out_dir = os.path.join(
+            os.path.dirname(out_dir_cards), "visualized", "words"
+        )
+        os.makedirs(word_visualized_out_dir, exist_ok=True)
+        img_pil.save(
+            os.path.join(
+                word_visualized_out_dir, f"{image_index:04}_visualized.png"
+            )
+        )
+
     # print(f"Generated cards stored in : {os.path.dirname(out_dir_cards)}")
     # return True
     return out_dir_cards
@@ -504,7 +526,7 @@ def main():
     cpu_workers = psutil.cpu_count(logical=False)
 
     import argparse
-
+ 
     # create the argument parser
     parser = argparse.ArgumentParser()
     # add an argument
