@@ -14,3 +14,7 @@ imutils
 psutil
 sklearn
 invoke
+
+# 
+arabic_reshaper
+python-bidi

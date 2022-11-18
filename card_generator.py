@@ -13,9 +13,13 @@ from visualization import draw_boxes
 
 try:
     from python_arabic_reshaper import arabic_reshaper
-    from bidi.algorithm import get_display
 except:
     print(f"Error laoding arabic_reshaper")
+
+try:
+    from bidi.algorithm import get_display
+except:
+    print(f"Error laoding bidi")
     
 parent_folder = os.path.dirname(os.path.abspath(__file__))
 submodule_path = os.path.join(parent_folder, "TextRecognitionDataGenerator")
